@@ -24,6 +24,21 @@
       --radius: 8px;
     }
 
+    html.light-mode {
+      --bg: #f9fafb;
+      --surface: #ffffff;
+      --card: #f3f4f6;
+      --card-2: #e5e7eb;
+      --accent: #2f6fd1;
+      --accent-light: #1f4a96;
+      --danger: #dc2626;
+      --success: #059669;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --border: #e5e7eb;
+      --shadow: 0 22px 60px rgba(0, 0, 0, 0.08);
+    }
+
     * {
       box-sizing: border-box;
       margin: 0;
@@ -43,6 +58,13 @@
       color: var(--text);
       font-family: "DM Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       font-weight: 400;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    html.light-mode body {
+      background:
+        radial-gradient(circle at top left, rgba(47, 111, 209, 0.08), transparent 32rem),
+        linear-gradient(135deg, #ffffff 0%, #f3f4f6 52%, #ffffff 100%);
     }
 
     body::before {
@@ -93,6 +115,11 @@
       background: rgba(11, 13, 20, 0.9);
       border-bottom: 1px solid var(--border);
       backdrop-filter: blur(14px);
+      transition: background 0.3s ease, border-color 0.3s ease;
+    }
+
+    html.light-mode .app-header {
+      background: rgba(255, 255, 255, 0.95);
     }
 
     .logo {
@@ -114,11 +141,13 @@
       border-radius: var(--radius);
       background: rgba(47, 111, 209, 0.13);
       color: var(--accent-light);
+      font-size: 24px;
+      transition: background 0.3s ease, border-color 0.3s ease;
     }
 
-    .logo-badge svg {
-      width: 27px;
-      height: 27px;
+    html.light-mode .logo-badge {
+      border-color: rgba(47, 111, 209, 0.3);
+      background: rgba(47, 111, 209, 0.08);
     }
 
     .logo-copy {
@@ -133,11 +162,16 @@
       overflow: hidden;
       color: #fff;
       font-family: "Bebas Neue", sans-serif;
-      font-size: 19px;
+      font-size: 16px;
       line-height: 1;
-      letter-spacing: 2.4px;
+      letter-spacing: 1.2px;
       text-overflow: ellipsis;
       white-space: nowrap;
+      transition: color 0.3s ease;
+    }
+
+    html.light-mode .logo-main {
+      color: #1f2937;
     }
 
     .logo-sub {
@@ -149,10 +183,94 @@
       text-transform: uppercase;
     }
 
+    .header-controls {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .refresh-section {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0 16px;
+      border-left: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+    }
+
+    .refresh-time {
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: 0.5px;
+    }
+
+    .refresh-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      min-height: 36px;
+      padding: 6px 12px;
+      border: 1px solid rgba(120, 168, 255, 0.28);
+      border-radius: 6px;
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      transition: border-color 0.18s ease, color 0.18s ease, background 0.18s ease;
+    }
+
+    .refresh-btn:hover,
+    .refresh-btn:focus-visible {
+      border-color: var(--accent-light);
+      background: rgba(47, 111, 209, 0.1);
+      color: var(--accent-light);
+      outline: none;
+    }
+
+    .refresh-icon {
+      width: 14px;
+      height: 14px;
+      display: inline-block;
+      transition: transform 0.3s ease;
+    }
+
+    .refresh-btn.loading .refresh-icon {
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .theme-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border: 1px solid rgba(120, 168, 255, 0.28);
+      border-radius: 6px;
+      background: transparent;
+      color: var(--accent-light);
+      cursor: pointer;
+      font-size: 18px;
+      transition: border-color 0.18s ease, background 0.18s ease;
+    }
+
+    .theme-toggle:hover,
+    .theme-toggle:focus-visible {
+      border-color: var(--accent-light);
+      background: rgba(47, 111, 209, 0.1);
+      outline: none;
+    }
+
     .header-vendor {
       display: flex;
       align-items: center;
-      justify-content: flex-end;
       gap: 14px;
       min-width: 0;
     }
@@ -207,6 +325,13 @@
       background:
         radial-gradient(circle at 20% 0%, rgba(47, 111, 209, 0.22), transparent 28rem),
         linear-gradient(135deg, #050609 0%, #111827 58%, #050609 100%);
+      transition: background 0.3s ease;
+    }
+
+    html.light-mode .login-screen {
+      background:
+        radial-gradient(circle at 20% 0%, rgba(47, 111, 209, 0.12), transparent 28rem),
+        linear-gradient(135deg, #ffffff 0%, #f3f4f6 58%, #ffffff 100%);
     }
 
     .login-container {
@@ -220,6 +345,11 @@
       background: linear-gradient(135deg, rgba(47, 111, 209, 0.12), rgba(16, 21, 33, 0.78));
       box-shadow: var(--shadow);
       backdrop-filter: blur(14px);
+      transition: background 0.3s ease, border-color 0.3s ease;
+    }
+
+    html.light-mode .login-card {
+      background: linear-gradient(135deg, rgba(47, 111, 209, 0.08), rgba(255, 255, 255, 0.9));
     }
 
     .login-header {
@@ -237,6 +367,12 @@
       border-radius: var(--radius);
       background: rgba(47, 111, 209, 0.13);
       font-size: 31px;
+      transition: background 0.3s ease, border-color 0.3s ease;
+    }
+
+    html.light-mode .login-logo {
+      border-color: rgba(47, 111, 209, 0.3);
+      background: rgba(47, 111, 209, 0.08);
     }
 
     .login-title {
@@ -244,6 +380,7 @@
       font-family: "Bebas Neue", sans-serif;
       font-size: 34px;
       letter-spacing: 2px;
+      transition: color 0.3s ease;
     }
 
     .login-subtitle {
@@ -320,6 +457,11 @@
       transform: translateY(-1px);
     }
 
+    html.light-mode .truck-option:hover,
+    html.light-mode .truck-option:focus-visible {
+      color: var(--text);
+    }
+
     .truck-option.selected {
       border-color: var(--accent);
       background: var(--accent);
@@ -377,6 +519,13 @@
       background: rgba(0, 0, 0, 0.26);
       color: var(--text);
       font-size: 14px;
+      transition: border-color 0.3s ease, background 0.3s ease, color 0.3s ease;
+    }
+
+    html.light-mode .text-input,
+    html.light-mode .file-input {
+      background: rgba(0, 0, 0, 0.04);
+      border-color: rgba(47, 111, 209, 0.2);
     }
 
     .file-input {
@@ -421,6 +570,11 @@
       color: var(--text);
       font-size: 14px;
       transition: border-color 0.18s ease, background 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    html.light-mode .password-input {
+      background: rgba(0, 0, 0, 0.04);
+      border-color: rgba(47, 111, 209, 0.2);
     }
 
     .password-input:focus {
@@ -484,7 +638,11 @@
     .submit-btn {
       border-color: var(--success);
       background: var(--success);
-      color: #03110b;
+      color: #fff;
+    }
+
+    html.light-mode .submit-btn {
+      color: #fff;
     }
 
     .submit-btn:hover:not(:disabled),
@@ -492,6 +650,7 @@
       border-color: #74edba;
       background: #74edba;
       box-shadow: 0 14px 34px rgba(68, 214, 155, 0.25);
+      color: #03110b;
     }
 
     .primary-action:disabled,
@@ -518,6 +677,13 @@
       color: #fff;
       outline: none;
       transform: translateY(-1px);
+    }
+
+    html.light-mode .secondary-action:hover,
+    html.light-mode .btn-secondary:hover,
+    html.light-mode .secondary-action:focus-visible,
+    html.light-mode .btn-secondary:focus-visible {
+      color: var(--accent-light);
     }
 
     .main-layout {
@@ -567,6 +733,11 @@
       line-height: 0.92;
       letter-spacing: 3px;
       text-transform: uppercase;
+      transition: color 0.3s ease;
+    }
+
+    html.light-mode .hero h2 {
+      color: var(--text);
     }
 
     .hero h2 span {
@@ -591,6 +762,12 @@
       border: 1px solid rgba(120, 168, 255, 0.22);
       border-radius: var(--radius);
       background: rgba(47, 111, 209, 0.08);
+      transition: border-color 0.3s ease, background 0.3s ease;
+    }
+
+    html.light-mode .view-toggle {
+      border-color: rgba(47, 111, 209, 0.2);
+      background: rgba(47, 111, 209, 0.05);
     }
 
     .toggle-btn {
@@ -649,6 +826,16 @@
       background: linear-gradient(135deg, rgba(47, 111, 209, 0.12), rgba(16, 21, 33, 0.74));
       box-shadow: var(--shadow);
       backdrop-filter: blur(14px);
+      transition: background 0.3s ease, border-color 0.3s ease;
+    }
+
+    html.light-mode .property-card-large,
+    html.light-mode .detail-card,
+    html.light-mode .calendar-section,
+    html.light-mode .booked-panel,
+    html.light-mode .details-modal-card {
+      background: linear-gradient(135deg, rgba(47, 111, 209, 0.08), rgba(255, 255, 255, 0.9));
+      border-color: rgba(47, 111, 209, 0.2);
     }
 
     .property-card-large {
@@ -708,6 +895,12 @@
       font-weight: 400;
       line-height: 1.05;
       letter-spacing: 2px;
+      transition: color 0.3s ease;
+    }
+
+    html.light-mode .card-name-large,
+    html.light-mode .detail-name {
+      color: var(--text);
     }
 
     .card-name-large {
@@ -756,6 +949,12 @@
       border-radius: var(--radius);
       background: rgba(68, 214, 155, 0.08);
       text-align: center;
+      transition: border-color 0.3s ease, background 0.3s ease;
+    }
+
+    html.light-mode .slots-info {
+      border-color: rgba(5, 150, 105, 0.3);
+      background: rgba(5, 150, 105, 0.08);
     }
 
     .slots-remaining,
@@ -879,7 +1078,12 @@
       border-radius: var(--radius);
       background: linear-gradient(135deg, rgba(47, 111, 209, 0.1), rgba(16, 21, 33, 0.64));
       box-shadow: 0 14px 36px rgba(0, 0, 0, 0.22);
-      transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+      transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease, background 0.3s ease;
+    }
+
+    html.light-mode .property-card {
+      background: linear-gradient(135deg, rgba(47, 111, 209, 0.08), rgba(255, 255, 255, 0.8));
+      box-shadow: 0 14px 36px rgba(0, 0, 0, 0.06);
     }
 
     .property-card:hover,
@@ -920,6 +1124,11 @@
       font-size: 28px;
       line-height: 1.05;
       letter-spacing: 1px;
+      transition: color 0.3s ease;
+    }
+
+    html.light-mode .card-name {
+      color: var(--text);
     }
 
     .card-stats {
@@ -975,6 +1184,11 @@
       gap: 14px;
       color: #fff;
       outline: none;
+    }
+
+    html.light-mode .detail-back-btn:hover,
+    html.light-mode .detail-back-btn:focus-visible {
+      color: var(--accent);
     }
 
     .detail-card {
@@ -1041,6 +1255,12 @@
       border: 1px solid rgba(68, 214, 155, 0.24);
       border-radius: var(--radius);
       background: rgba(68, 214, 155, 0.07);
+      transition: border-color 0.3s ease, background 0.3s ease;
+    }
+
+    html.light-mode .selected-dates-section {
+      border-color: rgba(5, 150, 105, 0.3);
+      background: rgba(5, 150, 105, 0.08);
     }
 
     .selected-dates-section.active {
@@ -1069,6 +1289,11 @@
       padding: 12px;
       border-radius: 6px;
       background: rgba(0, 0, 0, 0.22);
+      transition: background 0.3s ease;
+    }
+
+    html.light-mode .selected-date-item {
+      background: rgba(0, 0, 0, 0.06);
     }
 
     .date-display {
@@ -1094,6 +1319,12 @@
       background: rgba(0, 0, 0, 0.34);
       color: var(--text);
       font-size: 12px;
+      transition: background 0.3s ease, border-color 0.3s ease;
+    }
+
+    html.light-mode .time-input {
+      background: rgba(0, 0, 0, 0.06);
+      border-color: rgba(47, 111, 209, 0.2);
     }
 
     .time-input option {
@@ -1153,6 +1384,11 @@
       transform: translateY(-2px);
     }
 
+    html.light-mode .calendar-day:hover:not(:disabled),
+    html.light-mode .calendar-day:focus-visible:not(:disabled) {
+      color: var(--text);
+    }
+
     .calendar-day.selected {
       border-color: var(--accent);
       background: var(--accent);
@@ -1166,6 +1402,11 @@
       background: rgba(255, 99, 99, 0.08);
       color: rgba(244, 247, 251, 0.42);
       cursor: not-allowed;
+    }
+
+    html.light-mode .calendar-day.disabled,
+    html.light-mode .calendar-day.booked {
+      color: rgba(31, 41, 55, 0.5);
     }
 
     .calendar-day.booked::after {
@@ -1276,6 +1517,11 @@
       font-family: "Bebas Neue", sans-serif;
       font-size: 23px;
       letter-spacing: 1.8px;
+      transition: color 0.3s ease;
+    }
+
+    html.light-mode .booked-title {
+      color: var(--text);
     }
 
     .booked-subtitle {
@@ -1306,6 +1552,12 @@
       border-radius: var(--radius);
       background: rgba(68, 214, 155, 0.08);
       text-align: left;
+      transition: background 0.3s ease, border-color 0.3s ease;
+    }
+
+    html.light-mode .booked-item {
+      border-color: rgba(5, 150, 105, 0.3);
+      background: rgba(5, 150, 105, 0.08);
     }
 
     .booked-item-name {
@@ -1402,11 +1654,19 @@
       font-size: 36px;
       line-height: 1;
       letter-spacing: 1.5px;
+      transition: color 0.3s ease;
+    }
+
+    html.light-mode .details-modal-title {
+      color: var(--text);
     }
 
     .details-modal-body {
       display: grid;
       gap: 18px;
+      max-height: 60vh;
+      overflow-y: auto;
+      padding-right: 12px;
     }
 
     .details-field-label {
@@ -1420,8 +1680,78 @@
 
     .details-field-value {
       color: var(--text);
-      font-size: 15px;
+      font-size: 14px;
       line-height: 1.6;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .confirmation-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 1300;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: rgba(0, 0, 0, 0.88);
+    }
+
+    .confirmation-modal.active {
+      display: flex;
+    }
+
+    .confirmation-modal-card {
+      width: min(420px, 100%);
+      padding: 36px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: linear-gradient(135deg, rgba(47, 111, 209, 0.12), rgba(16, 21, 33, 0.74));
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+      transition: background 0.3s ease, border-color 0.3s ease;
+    }
+
+    html.light-mode .confirmation-modal-card {
+      background: linear-gradient(135deg, rgba(47, 111, 209, 0.08), rgba(255, 255, 255, 0.9));
+      border-color: rgba(47, 111, 209, 0.2);
+    }
+
+    .confirmation-modal-header {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .confirmation-modal-icon {
+      display: inline-block;
+      font-size: 48px;
+      margin-bottom: 16px;
+    }
+
+    .confirmation-modal-title {
+      color: #fff;
+      font-family: "Bebas Neue", sans-serif;
+      font-size: 28px;
+      letter-spacing: 1.2px;
+      margin-bottom: 10px;
+      transition: color 0.3s ease;
+    }
+
+    html.light-mode .confirmation-modal-title {
+      color: var(--text);
+    }
+
+    .confirmation-modal-message {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+
+    .confirmation-modal-actions {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
     }
 
     @media (max-width: 1024px) {
@@ -1441,17 +1771,49 @@
         align-items: flex-start;
         min-height: 0;
         padding: 14px 16px;
+        flex-wrap: wrap;
+      }
+
+      .logo {
+        flex: 0 1 100%;
+        order: 1;
+      }
+
+      .header-controls {
+        order: 2;
+        flex: 1;
+      }
+
+      .header-vendor {
+        order: 3;
+        flex: 1;
       }
 
       .logo-main {
         max-width: 46vw;
-        font-size: 16px;
+        font-size: 14px;
       }
 
       .header-vendor {
         flex-direction: column;
         align-items: flex-end;
         gap: 8px;
+      }
+
+      .refresh-section {
+        border: 0;
+        padding: 0;
+        font-size: 10px;
+      }
+
+      .refresh-time {
+        font-size: 10px;
+      }
+
+      .refresh-btn {
+        min-height: 32px;
+        padding: 4px 8px;
+        font-size: 9px;
       }
 
       .main-layout {
@@ -1504,6 +1866,10 @@
       }
 
       .properties-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .confirmation-modal-actions {
         grid-template-columns: 1fr;
       }
     }
@@ -1592,16 +1958,26 @@
 
   <header class="app-header hidden" id="appHeader">
     <a class="logo" href="#" aria-label="Alturas Capital Partners vendor portal">
-      <span class="logo-badge" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M9 18h6M9 14h6M3 10h18M3 6h18v8c0 1.1-.9 2-2 2H5c-1.1 0-2-.9-2-2V6Z" />
-        </svg>
-      </span>
+      <span class="logo-badge" aria-hidden="true">🏢</span>
       <span class="logo-copy">
-        <span class="logo-main">Alturas Capital Partners</span>
+        <span class="logo-main">ALTURAS CAPITAL PARTNERS</span>
         <span class="logo-sub">Vendor Portal</span>
       </span>
     </a>
+    <div class="header-controls">
+      <div class="refresh-section">
+        <span class="refresh-time" id="refreshTime">Updated just now</span>
+        <button class="refresh-btn" type="button" id="refreshBtn" aria-label="Refresh data">
+          <svg class="refresh-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M23 4v6h-6M1 20v-6h6M3.51 9a9 9 0 0 1 14.85-3.36M20.49 15a9 9 0 0 1-14.85 3.36" />
+          </svg>
+          Refresh
+        </button>
+      </div>
+      <button class="theme-toggle" type="button" id="themeToggle" aria-label="Toggle dark/light mode">
+        🌙
+      </button>
+    </div>
     <div class="header-vendor">
       <div class="vendor-name" id="vendorName">-</div>
       <button class="logout-btn" type="button" id="logoutBtn">Logout</button>
@@ -1751,7 +2127,7 @@
       </div>
       <div class="details-modal-body">
         <div>
-          <div class="details-field-label">Description</div>
+          <div class="details-field-label">Description & Parking</div>
           <div class="details-field-value" id="detailsModalDescription">-</div>
         </div>
         <div>
@@ -1762,11 +2138,26 @@
     </section>
   </div>
 
+  <div class="confirmation-modal" id="confirmationModal" role="dialog" aria-modal="true" aria-labelledby="confirmationTitle">
+    <section class="confirmation-modal-card">
+      <div class="confirmation-modal-header">
+        <div class="confirmation-modal-icon" id="confirmationIcon">⚠️</div>
+        <h2 class="confirmation-modal-title" id="confirmationTitle">Confirm Action</h2>
+      </div>
+      <p class="confirmation-modal-message" id="confirmationMessage">Are you sure?</p>
+      <div class="confirmation-modal-actions">
+        <button class="btn btn-secondary" type="button" id="confirmCancelBtn">No, Keep It</button>
+        <button class="btn btn-primary" type="button" id="confirmProceedBtn">Yes, Proceed</button>
+      </div>
+    </section>
+  </div>
+
   <script>
     (() => {
       "use strict";
 
       const STORAGE_KEY = "acp-food-truck-bookings-v2";
+      const THEME_STORAGE_KEY = "acp-theme-preference";
 
       const FOOD_TRUCKS = [
         { id: "truck-1", name: "Taco Supreme" },
@@ -1785,30 +2176,30 @@
           frequency: 2,
           totalSlots: 8,
           gradient: "linear-gradient(135deg, #1c4f8f, #12314f)",
-          description: "A high-traffic office campus with steady weekday foot traffic from finance, operations, and support teams.",
-          address: "2000 North Loop West, Houston, TX 77018"
+          description: "🌟 Northcreek Northcreek is our most popular property and a favorite stop for food trucks and guests alike! With high visibility and a steady flow of tenants and visitors, this location always draws a great crowd.\n📍 Address: 5725 Mark Dabling Blvd, Colorado Springs, CO 80919 (Located just off I-25)\n🚚 Parking Instructions: Food trucks must park at the star-marked location on the map to ensure smooth traffic flow and easy access for customers.",
+          address: "5725 Mark Dabling Blvd, Colorado Springs, CO 80919"
         },
         {
           id: 2,
-          name: "985 Space Center",
+          name: "Space Center",
           mark: "SC",
           employees: 180,
           frequency: 2,
           totalSlots: 8,
           gradient: "linear-gradient(135deg, #31576e, #183242)",
-          description: "A research-forward workplace with strong lunch demand and a compact employee base that favors fast service.",
-          address: "985 Space Center Drive, Colorado Springs, CO 80915"
+          description: "Space Center is one of our signature properties, offering a central location and a strong community presence. While not as large as Northcreek, it consistently attracts steady foot traffic and provides vendors with great visibility.\n📍 Address: 985 Space Center Dr, Colorado Springs, CO 80915\n🚚 Parking Instructions: Food trucks must park at the star-marked location on the map for easy access and to maintain smooth traffic flow.",
+          address: "985 Space Center Dr, Colorado Springs, CO 80915"
         },
         {
           id: 3,
-          name: "1055 Newport",
+          name: "Newport",
           mark: "NP",
           employees: 320,
           frequency: 3,
           totalSlots: 12,
           gradient: "linear-gradient(135deg, #5b4f8f, #24244d)",
-          description: "A larger multi-tenant business site with a dependable midday crowd and room for repeat weekly visits.",
-          address: "1055 Newport Center Drive, Newport Beach, CA 92660"
+          description: "🏢 Newport is a professional office building with a consistent flow of employees and visitors during the workweek. This location offers food trucks excellent exposure to a busy office community, with heavy foot traffic on Tuesdays and Wednesdays, making it an ideal stop for lunch crowds.\n📍 Address: 1055 Newport Rd, Colorado Springs, CO 80916\n🚚 Parking Instructions: Food trucks must park at the star-marked location on the map to ensure smooth traffic flow and convenient access for employees.",
+          address: "1055 Newport Rd, Colorado Springs, CO 80916"
         },
         {
           id: 4,
@@ -1818,8 +2209,8 @@
           frequency: 1,
           totalSlots: 4,
           gradient: "linear-gradient(135deg, #2f745d, #173f38)",
-          description: "A smaller campus with a relaxed office mix where curated weekly visits tend to perform better than daily rotations.",
-          address: "410 Garden Gateway Boulevard, San Jose, CA 95134"
+          description: "🏢 Garden Gateway is a dynamic office complex consisting of three buildings: 1365, 1355, and 1375 Garden of the Gods Rd, Colorado Springs, CO 80907, USA. This property sees a steady flow of employees throughout the week, making it an ideal location for food trucks to reach a busy lunch crowd.\n📍 Address (all buildings): 1365 Garden of the Gods Rd, Colorado Springs, CO 80907\n🚚 Parking Instructions: Food trucks must park at the star-marked location at 1365 Garden of the Gods Rd, which serves as the designated access point for the complex.",
+          address: "1365 Garden of the Gods Rd, Colorado Springs, CO 80907"
         },
         {
           id: 5,
@@ -1829,7 +2220,7 @@
           frequency: 3,
           totalSlots: 12,
           gradient: "linear-gradient(135deg, #7b5948, #362922)",
-          description: "A flagship office destination with dense daytime occupancy and strong recurring demand for varied vendors.",
+          description: "Presidio is a flagship office destination with dense daytime occupancy and strong recurring demand for varied vendors. This premier location provides excellent visibility and consistent foot traffic throughout the day.\n📍 Address: 120 Presidio Avenue, San Francisco, CA 94115\n🚚 Parking Instructions: Food trucks must park at the designated location at the front entrance to ensure maximum visibility and convenient customer access.",
           address: "120 Presidio Avenue, San Francisco, CA 94115"
         }
       ];
@@ -1859,7 +2250,9 @@
         selectedDates: {},
         editingBookingId: null,
         editingDraft: null,
-        previousFocus: null
+        previousFocus: null,
+        lastRefresh: new Date(),
+        pendingConfirmation: null
       };
 
       const $ = (id) => document.getElementById(id);
@@ -1867,10 +2260,54 @@
       window.addEventListener("load", init);
 
       function init() {
+        initTheme();
         renderLoginScreen();
         bindStaticEvents();
         renderCarousel();
         renderGrid();
+      }
+
+      function initTheme() {
+        const savedTheme = window.localStorage.getItem(THEME_STORAGE_KEY);
+        const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        const shouldUseLightMode = savedTheme === "light" || (savedTheme === null && !prefersDark);
+
+        if (shouldUseLightMode) {
+          document.documentElement.classList.add("light-mode");
+          $("themeToggle").textContent = "☀️";
+        } else {
+          document.documentElement.classList.remove("light-mode");
+          $("themeToggle").textContent = "🌙";
+        }
+      }
+
+      function toggleTheme() {
+        const isLightMode = document.documentElement.classList.toggle("light-mode");
+        window.localStorage.setItem(THEME_STORAGE_KEY, isLightMode ? "light" : "dark");
+        $("themeToggle").textContent = isLightMode ? "☀️" : "🌙";
+      }
+
+      function updateRefreshTime() {
+        state.lastRefresh = new Date();
+        const now = new Date();
+        const hours = now.getHours();
+        const minutes = String(now.getMinutes()).padStart(2, "0");
+        const ampm = hours >= 12 ? "PM" : "AM";
+        const displayHours = hours % 12 || 12;
+        $("refreshTime").textContent = `Updated ${displayHours}:${minutes} ${ampm}`;
+      }
+
+      function refreshData() {
+        const refreshBtn = $("refreshBtn");
+        refreshBtn.classList.add("loading");
+        
+        setTimeout(() => {
+          renderCarousel();
+          renderGrid();
+          renderBookedDates();
+          updateRefreshTime();
+          refreshBtn.classList.remove("loading");
+        }, 600);
       }
 
       function bindStaticEvents() {
@@ -1894,6 +2331,10 @@
         $("checkBookingsBtn").addEventListener("click", checkYourBookings);
         $("bookAnotherBtn").addEventListener("click", bookAnotherProperty);
         $("detailsCloseBtn").addEventListener("click", closeDetails);
+        $("themeToggle").addEventListener("click", toggleTheme);
+        $("refreshBtn").addEventListener("click", refreshData);
+        $("confirmCancelBtn").addEventListener("click", cancelConfirmation);
+        $("confirmProceedBtn").addEventListener("click", proceedConfirmation);
 
         document.querySelectorAll(".toggle-btn").forEach((button) => {
           button.addEventListener("click", () => switchView(button.dataset.view));
@@ -1903,11 +2344,40 @@
           if (event.target === event.currentTarget) closeDetails();
         });
 
+        $("confirmationModal").addEventListener("click", (event) => {
+          if (event.target === event.currentTarget) cancelConfirmation();
+        });
+
         document.addEventListener("keydown", (event) => {
-          if (event.key === "Escape" && $("detailsModal").classList.contains("active")) {
-            closeDetails();
+          if (event.key === "Escape") {
+            if ($("detailsModal").classList.contains("active")) {
+              closeDetails();
+            } else if ($("confirmationModal").classList.contains("active")) {
+              cancelConfirmation();
+            }
           }
         });
+      }
+
+      function showConfirmation(config) {
+        state.pendingConfirmation = config;
+        $("confirmationIcon").textContent = config.icon || "⚠️";
+        $("confirmationTitle").textContent = config.title || "Confirm Action";
+        $("confirmationMessage").textContent = config.message || "Are you sure?";
+        $("confirmationModal").classList.add("active");
+        $("confirmProceedBtn").focus();
+      }
+
+      function proceedConfirmation() {
+        if (state.pendingConfirmation && state.pendingConfirmation.onConfirm) {
+          state.pendingConfirmation.onConfirm();
+        }
+        cancelConfirmation();
+      }
+
+      function cancelConfirmation() {
+        state.pendingConfirmation = null;
+        $("confirmationModal").classList.remove("active");
       }
 
       function renderLoginScreen() {
@@ -1987,6 +2457,7 @@
         $("appHeader").classList.remove("hidden");
         $("mainLayout").classList.remove("hidden");
         $("vendorName").textContent = state.currentUser.name;
+        updateRefreshTime();
 
         switchView(state.activeView);
         renderBookedDates();
@@ -1995,27 +2466,32 @@
       }
 
       function logout() {
-        if (!window.confirm("Logout and return to login?")) return;
+        showConfirmation({
+          icon: "👋",
+          title: "Logout",
+          message: "Are you sure you want to logout and return to the login screen?",
+          onConfirm: () => {
+            state.currentUser = null;
+            state.selectedTruckId = null;
+            state.currentPropertyId = null;
+            state.selectedDates = {};
+            state.editingBookingId = null;
+            state.editingDraft = null;
 
-        state.currentUser = null;
-        state.selectedTruckId = null;
-        state.currentPropertyId = null;
-        state.selectedDates = {};
-        state.editingBookingId = null;
-        state.editingDraft = null;
+            $("loginScreen").classList.remove("hidden");
+            $("appHeader").classList.add("hidden");
+            $("mainLayout").classList.add("hidden");
+            showLoginPanel();
+            $("passwordSection").classList.remove("show");
+            $("passwordInput").value = "";
+            $("loginActionBtn").textContent = "Select Truck";
+            $("loginStatus").textContent = "";
 
-        $("loginScreen").classList.remove("hidden");
-        $("appHeader").classList.add("hidden");
-        $("mainLayout").classList.add("hidden");
-        showLoginPanel();
-        $("passwordSection").classList.remove("show");
-        $("passwordInput").value = "";
-        $("loginActionBtn").textContent = "Select Truck";
-        $("loginStatus").textContent = "";
-
-        document.querySelectorAll(".truck-option").forEach((button) => {
-          button.classList.remove("selected");
-          button.setAttribute("aria-selected", "false");
+            document.querySelectorAll(".truck-option").forEach((button) => {
+              button.classList.remove("selected");
+              button.setAttribute("aria-selected", "false");
+            });
+          }
         });
       }
 
@@ -2515,16 +2991,21 @@
       }
 
       function cancelBookingItem(id) {
-        if (!state.currentUser || !window.confirm("Cancel this booking?")) return;
-
-        state.bookings[state.currentUser.id] = getUserBookings().filter((booking) => booking.id !== id);
-        state.editingBookingId = null;
-        state.editingDraft = null;
-        saveBookings();
-        renderBookedDates();
-        renderCarousel();
-        renderGrid();
-        if (state.currentPropertyId) renderCalendar();
+        showConfirmation({
+          icon: "🗑️",
+          title: "Cancel Booking",
+          message: "Are you sure you want to cancel this booking?",
+          onConfirm: () => {
+            state.bookings[state.currentUser.id] = getUserBookings().filter((booking) => booking.id !== id);
+            state.editingBookingId = null;
+            state.editingDraft = null;
+            saveBookings();
+            renderBookedDates();
+            renderCarousel();
+            renderGrid();
+            if (state.currentPropertyId) renderCalendar();
+          }
+        });
       }
 
       function goToPropertyBooking(propertyId) {
