@@ -25,18 +25,18 @@
     }
 
     html.light-mode {
-      --bg: #f9fafb;
+      --bg: #f6f8fc;
       --surface: #ffffff;
-      --card: #f3f4f6;
-      --card-2: #e5e7eb;
+      --card: #ffffff;
+      --card-2: #eef3fb;
       --accent: #2f6fd1;
-      --accent-light: #1f4a96;
-      --danger: #dc2626;
-      --success: #059669;
-      --text: #1f2937;
-      --muted: #6b7280;
-      --border: #e5e7eb;
-      --shadow: 0 22px 60px rgba(0, 0, 0, 0.08);
+      --accent-light: #1957ad;
+      --danger: #b91c1c;
+      --success: #047857;
+      --text: #111827;
+      --muted: #4b5563;
+      --border: #b8c7dd;
+      --shadow: 0 22px 60px rgba(30, 41, 59, 0.14);
     }
 
     * {
@@ -120,6 +120,7 @@
 
     html.light-mode .app-header {
       background: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 10px 30px rgba(30, 41, 59, 0.08);
     }
 
     .logo {
@@ -321,6 +322,7 @@
       z-index: 1000;
       display: grid;
       place-items: center;
+      overflow-y: auto;
       padding: 20px;
       background:
         radial-gradient(circle at 20% 0%, rgba(47, 111, 209, 0.22), transparent 28rem),
@@ -349,7 +351,8 @@
     }
 
     html.light-mode .login-card {
-      background: linear-gradient(135deg, rgba(47, 111, 209, 0.08), rgba(255, 255, 255, 0.9));
+      background: #ffffff;
+      border-color: var(--border);
     }
 
     .login-header {
@@ -419,6 +422,38 @@
     .trucks-list {
       display: grid;
       gap: 9px;
+    }
+
+    .truck-select {
+      width: 100%;
+      min-height: 56px;
+      padding: 14px 16px;
+      border: 1px solid rgba(120, 168, 255, 0.28);
+      border-radius: var(--radius);
+      background: rgba(47, 111, 209, 0.08);
+      color: var(--text);
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: 700;
+      text-align: center;
+      transition: border-color 0.18s ease, background 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .truck-select:focus {
+      border-color: var(--accent-light);
+      box-shadow: 0 0 0 3px rgba(120, 168, 255, 0.1);
+      outline: none;
+    }
+
+    .truck-select option {
+      background: var(--card);
+      color: var(--text);
+    }
+
+    html.light-mode .truck-select {
+      background: #ffffff;
+      border-color: var(--border);
+      color: var(--text);
     }
 
     .truck-option {
@@ -834,8 +869,8 @@
     html.light-mode .calendar-section,
     html.light-mode .booked-panel,
     html.light-mode .details-modal-card {
-      background: linear-gradient(135deg, rgba(47, 111, 209, 0.08), rgba(255, 255, 255, 0.9));
-      border-color: rgba(47, 111, 209, 0.2);
+      background: #ffffff;
+      border-color: var(--border);
     }
 
     .property-card-large {
@@ -1082,8 +1117,9 @@
     }
 
     html.light-mode .property-card {
-      background: linear-gradient(135deg, rgba(47, 111, 209, 0.08), rgba(255, 255, 255, 0.8));
-      box-shadow: 0 14px 36px rgba(0, 0, 0, 0.06);
+      background: #ffffff;
+      border-color: var(--border);
+      box-shadow: 0 14px 36px rgba(30, 41, 59, 0.08);
     }
 
     .property-card:hover,
@@ -1680,10 +1716,96 @@
 
     .details-field-value {
       color: var(--text);
+      display: grid;
+      gap: 14px;
       font-size: 14px;
-      line-height: 1.6;
+      line-height: 1.7;
       white-space: pre-wrap;
       word-break: break-word;
+    }
+
+    .details-paragraph {
+      margin: 0;
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    html.light-mode .plain-btn,
+    html.light-mode .logout-btn,
+    html.light-mode .details-close-btn,
+    html.light-mode .btn-secondary,
+    html.light-mode .refresh-btn {
+      background: #ffffff;
+      border-color: var(--border);
+      color: var(--accent-light);
+    }
+
+    html.light-mode .secondary-action:hover,
+    html.light-mode .btn-secondary:hover,
+    html.light-mode .secondary-action:focus-visible,
+    html.light-mode .btn-secondary:focus-visible,
+    html.light-mode .refresh-btn:hover,
+    html.light-mode .refresh-btn:focus-visible {
+      background: #eef4ff;
+      color: var(--accent-light);
+    }
+
+    html.light-mode .slots-info,
+    html.light-mode .selected-dates-section,
+    html.light-mode .booked-item {
+      background: #ecfdf5;
+      border-color: #a7f3d0;
+    }
+
+    html.light-mode .selected-date-item {
+      background: #f1f5f9;
+    }
+
+    html.light-mode .calendar-day {
+      background: #ffffff;
+      border-color: #cbd5e1;
+      color: #334155;
+    }
+
+    html.light-mode .calendar-day:hover:not(:disabled),
+    html.light-mode .calendar-day:focus-visible:not(:disabled) {
+      background: #eef4ff;
+      color: #111827;
+    }
+
+    html.light-mode .calendar-day.selected {
+      background: var(--accent);
+      color: #ffffff;
+    }
+
+    html.light-mode .calendar-day.disabled,
+    html.light-mode .calendar-day.booked {
+      background: #fef2f2;
+      border-color: #fecaca;
+      color: #7f1d1d;
+      opacity: 0.72;
+    }
+
+    html.light-mode .calendar-day.empty {
+      background: transparent;
+    }
+
+    html.light-mode .details-modal {
+      background: rgba(15, 23, 42, 0.48);
+    }
+
+    html.light-mode .details-modal-card,
+    html.light-mode .confirmation-modal-card {
+      background: #ffffff;
+      border-color: var(--border);
+      box-shadow: 0 28px 70px rgba(15, 23, 42, 0.22);
+    }
+
+    html.light-mode .details-field-value,
+    html.light-mode .details-paragraph,
+    html.light-mode .confirmation-modal-message,
+    html.light-mode .confirmation-text {
+      color: #172033;
     }
 
     .confirmation-modal {
@@ -1902,7 +2024,11 @@
 
           <div class="login-section">
             <div class="section-label">Step 1: Select Your Truck</div>
-            <div class="trucks-list" id="trucksList" role="listbox" aria-label="Food trucks"></div>
+            <div class="trucks-list">
+              <select class="truck-select" id="truckSelect" aria-label="Select food truck">
+                <option value="">Loading food trucks...</option>
+              </select>
+            </div>
             <button class="plain-btn register-truck-btn" type="button" id="newVendorBtn">Register Your Foodtruck</button>
           </div>
 
@@ -2158,13 +2284,23 @@
 
       const STORAGE_KEY = "acp-food-truck-bookings-v2";
       const THEME_STORAGE_KEY = "acp-theme-preference";
+      const GOOGLE_SHEETS_CONFIG = {
+        spreadsheetId: "1u1g0pz_jI92Eifju4YeNTX6jkmk1MGmDJLsX6h40Bko",
+        foodTruckSheet: "Sheet6",
+        foodTruckRange: "A2:B50",
+        bookingsSheet: "Sheet3",
+        bookingsRange: "A2:E1000",
+        exceptionsSheet: "Sheet5",
+        exceptionsRange: "A1:Z1000",
+        appsScriptUrl: ""
+      };
 
-      const FOOD_TRUCKS = [
-        { id: "truck-1", name: "Taco Supreme" },
-        { id: "truck-2", name: "Burger Express" },
-        { id: "truck-3", name: "Pizza on Wheels" },
-        { id: "truck-4", name: "Fusion Cart" },
-        { id: "truck-5", name: "Sweet Treats" }
+      let FOOD_TRUCKS = [
+        { id: "truck-1", name: "Taco Supreme", password: "", row: 2 },
+        { id: "truck-2", name: "Burger Express", password: "", row: 3 },
+        { id: "truck-3", name: "Pizza on Wheels", password: "", row: 4 },
+        { id: "truck-4", name: "Fusion Cart", password: "", row: 5 },
+        { id: "truck-5", name: "Sweet Treats", password: "", row: 6 }
       ];
 
       const PROPERTIES = [
@@ -2172,6 +2308,7 @@
           id: 1,
           name: "Northcreek",
           mark: "NC",
+          aliases: ["Northcreek"],
           employees: 250,
           frequency: 2,
           totalSlots: 8,
@@ -2183,6 +2320,7 @@
           id: 2,
           name: "Space Center",
           mark: "SC",
+          aliases: ["Space Center", "985 Space Center"],
           employees: 180,
           frequency: 2,
           totalSlots: 8,
@@ -2194,6 +2332,7 @@
           id: 3,
           name: "Newport",
           mark: "NP",
+          aliases: ["Newport", "1055 Newport"],
           employees: 320,
           frequency: 3,
           totalSlots: 12,
@@ -2205,6 +2344,7 @@
           id: 4,
           name: "Garden Gateway",
           mark: "GG",
+          aliases: ["Garden Gateway"],
           employees: 150,
           frequency: 1,
           totalSlots: 4,
@@ -2216,6 +2356,7 @@
           id: 5,
           name: "Presidio",
           mark: "PR",
+          aliases: ["Presidio"],
           employees: 420,
           frequency: 3,
           totalSlots: 12,
@@ -2228,7 +2369,8 @@
       const TODAY = startOfDay(new Date());
       const MIN_MONTH = startOfMonth(TODAY);
       const MAX_MONTH = new Date(TODAY.getFullYear(), 11, 1);
-      const OCCUPIED_DATES = buildDemoOccupiedDates();
+      let OCCUPIED_DATES = {};
+      let EXCEPTION_DATES = {};
 
       const TIME_OPTIONS = Array.from({ length: 23 }, (_, index) => {
         const totalMinutes = (8 * 60) + (index * 30);
@@ -2248,6 +2390,7 @@
         activeView: "carousel",
         currentPropertyId: null,
         selectedDates: {},
+        sheetBookings: [],
         editingBookingId: null,
         editingDraft: null,
         previousFocus: null,
@@ -2265,6 +2408,7 @@
         bindStaticEvents();
         renderCarousel();
         renderGrid();
+        loadGoogleSheetsData({ silent: true });
       }
 
       function initTheme() {
@@ -2297,21 +2441,272 @@
         $("refreshTime").textContent = `Updated ${displayHours}:${minutes} ${ampm}`;
       }
 
-      function refreshData() {
+      async function refreshData() {
         const refreshBtn = $("refreshBtn");
         refreshBtn.classList.add("loading");
-        
-        setTimeout(() => {
+        refreshBtn.disabled = true;
+
+        try {
+          await loadGoogleSheetsData({ silent: false });
+        } finally {
           renderCarousel();
           renderGrid();
           renderBookedDates();
           updateRefreshTime();
           refreshBtn.classList.remove("loading");
-        }, 600);
+          refreshBtn.disabled = false;
+        }
+      }
+
+      async function loadGoogleSheetsData({ silent = false } = {}) {
+        try {
+          const [truckRows, bookingRows, exceptionTable] = await Promise.all([
+            fetchSheetRows(GOOGLE_SHEETS_CONFIG.foodTruckSheet, GOOGLE_SHEETS_CONFIG.foodTruckRange),
+            fetchSheetRows(GOOGLE_SHEETS_CONFIG.bookingsSheet, GOOGLE_SHEETS_CONFIG.bookingsRange),
+            fetchSheetTable(GOOGLE_SHEETS_CONFIG.exceptionsSheet, GOOGLE_SHEETS_CONFIG.exceptionsRange)
+          ]);
+
+          const sheetTrucks = buildFoodTrucksFromSheetRows(truckRows);
+          if (sheetTrucks.length) {
+            FOOD_TRUCKS = sheetTrucks;
+            if (state.currentUser) {
+              state.currentUser =
+                FOOD_TRUCKS.find((truck) => truck.id === state.currentUser.id) ||
+                FOOD_TRUCKS.find((truck) => normalizeName(truck.name) === normalizeName(state.currentUser.name)) ||
+                state.currentUser;
+              state.selectedTruckId = state.currentUser.id;
+            }
+            renderLoginScreen();
+          }
+
+          state.sheetBookings = buildSheetBookingsFromRows(bookingRows);
+          OCCUPIED_DATES = buildOccupiedDatesFromBookings(state.sheetBookings);
+          EXCEPTION_DATES = buildExceptionDatesFromSheetTable(exceptionTable);
+
+          if (!silent && $("loginScreen").classList.contains("hidden")) {
+            $("refreshTime").textContent = "Updated from Google Sheets";
+          }
+
+          renderCarousel();
+          renderGrid();
+          renderBookedDates();
+          if (state.currentPropertyId) renderCalendar();
+        } catch (error) {
+          console.warn("Google Sheets load failed", error);
+          if (!silent) {
+            const message = "Could not load the Google Sheet. Check sharing settings and try refresh again.";
+            if ($("loginScreen").classList.contains("hidden")) {
+              $("refreshTime").textContent = "Sheet refresh failed";
+            } else {
+              $("loginStatus").textContent = message;
+            }
+          }
+        }
+      }
+
+      function fetchSheetRows(sheet, range) {
+        return fetchSheetTable(sheet, range).then((table) => table.rows);
+      }
+
+      function fetchSheetTable(sheet, range) {
+        return new Promise((resolve, reject) => {
+          const callbackName = `sheetCallback_${Date.now()}_${Math.random().toString(36).slice(2)}`;
+          const params = new URLSearchParams({
+            tqx: `responseHandler:${callbackName}`,
+            sheet,
+            range
+          });
+          const script = document.createElement("script");
+          const timeout = window.setTimeout(() => {
+            cleanup();
+            reject(new Error(`Timed out loading ${sheet}`));
+          }, 15000);
+
+          function cleanup() {
+            window.clearTimeout(timeout);
+            delete window[callbackName];
+            script.remove();
+          }
+
+          window[callbackName] = (response) => {
+            cleanup();
+            if (!response || response.status === "error") {
+              reject(new Error(response?.errors?.[0]?.detailed_message || `Could not load ${sheet}`));
+              return;
+            }
+            const cols = (response.table?.cols || []).map((col) => ({
+              label: col?.label || "",
+              id: col?.id || ""
+            }));
+            const rows = (response.table?.rows || []).map((row) => (row.c || []).map((cell) => ({
+              value: cell?.v ?? "",
+              formatted: cell?.f ?? ""
+            })));
+            resolve({ cols, rows });
+          };
+
+          script.onerror = () => {
+            cleanup();
+            reject(new Error(`Could not load ${sheet}`));
+          };
+
+          script.src = `https://docs.google.com/spreadsheets/d/${GOOGLE_SHEETS_CONFIG.spreadsheetId}/gviz/tq?${params.toString()}`;
+          document.head.appendChild(script);
+        });
+      }
+
+      function buildFoodTrucksFromSheetRows(rows) {
+        return rows
+          .map((row, index) => {
+            const name = String(row[0]?.value || row[0]?.formatted || "").trim();
+            const password = String(row[1]?.value || row[1]?.formatted || "").trim();
+            const sheetRow = index + 2;
+
+            return {
+              id: `truck-row-${sheetRow}-${slugify(name) || "vendor"}`,
+              name,
+              password,
+              row: sheetRow
+            };
+          })
+          .filter((truck) => truck.name);
+      }
+
+      function buildSheetBookingsFromRows(rows) {
+        return rows
+          .map((row, index) => {
+            const truckName = String(row[0]?.value || row[0]?.formatted || "").trim();
+            const date = normalizeSheetDate(row[2]);
+            const property = getPropertyBySheetName(row[3]?.value || row[3]?.formatted || "");
+            const time = String(row[4]?.value || row[4]?.formatted || "").trim();
+
+            if (!truckName || !date || !property) return null;
+
+            return {
+              id: `sheet-booking-${index + 2}`,
+              source: "sheet",
+              truckName,
+              propId: property.id,
+              propName: property.name,
+              date,
+              displayTime: time || "Time not listed"
+            };
+          })
+          .filter(Boolean);
+      }
+
+      function buildOccupiedDatesFromBookings(bookings) {
+        const occupied = {};
+
+        bookings.forEach((booking) => {
+          occupied[booking.propId] ||= [];
+          if (!occupied[booking.propId].includes(booking.date)) occupied[booking.propId].push(booking.date);
+        });
+
+        return occupied;
+      }
+
+      function buildExceptionDatesFromSheetTable(table) {
+        const exceptionDates = {};
+        const rows = table?.rows || [];
+        const columns = table?.cols || [];
+
+        columns.forEach((column, columnIndex) => {
+          const property = getPropertyBySheetName(column.label || column.id || "");
+          if (!property) return;
+
+          rows.forEach((row) => {
+            const dateKey = normalizeSheetDate(row[columnIndex]);
+            if (!dateKey) return;
+            exceptionDates[property.id] ||= [];
+            if (!exceptionDates[property.id].includes(dateKey)) exceptionDates[property.id].push(dateKey);
+          });
+        });
+
+        return exceptionDates;
+      }
+
+      function normalizeSheetDate(cell) {
+        const value = cell?.value ?? "";
+        const formatted = cell?.formatted ?? "";
+        const dateLiteral = String(value).match(/^Date\((\d+),(\d+),(\d+)/);
+
+        if (dateLiteral) {
+          return toDateKey(new Date(Number(dateLiteral[1]), Number(dateLiteral[2]), Number(dateLiteral[3])));
+        }
+
+        const parsed = new Date(formatted || value);
+        return Number.isNaN(parsed.getTime()) ? "" : toDateKey(parsed);
+      }
+
+      function getPropertyBySheetName(name) {
+        const normalized = normalizeName(name);
+        if (!normalized) return null;
+
+        return PROPERTIES.find((property) => {
+          const names = [property.name, ...(property.aliases || [])].map(normalizeName);
+          return names.includes(normalized);
+        }) || null;
+      }
+
+      function normalizeName(value) {
+        return String(value || "")
+          .toLowerCase()
+          .replace(/[^a-z0-9]/g, "");
+      }
+
+      function slugify(value) {
+        return normalizeName(value).slice(0, 36);
+      }
+
+      function isBackendConfigured() {
+        return Boolean(GOOGLE_SHEETS_CONFIG.appsScriptUrl && GOOGLE_SHEETS_CONFIG.appsScriptUrl.startsWith("https://"));
+      }
+
+      function callAppsScript(params) {
+        if (!isBackendConfigured()) {
+          return Promise.resolve({ ok: false, offline: true });
+        }
+
+        return new Promise((resolve, reject) => {
+          const callbackName = `appsScriptCallback_${Date.now()}_${Math.random().toString(36).slice(2)}`;
+          const url = new URL(GOOGLE_SHEETS_CONFIG.appsScriptUrl);
+          Object.entries({ ...params, callback: callbackName }).forEach(([key, value]) => {
+            url.searchParams.set(key, String(value ?? ""));
+          });
+
+          const script = document.createElement("script");
+          const timeout = window.setTimeout(() => {
+            cleanup();
+            reject(new Error("Google Apps Script request timed out"));
+          }, 15000);
+
+          function cleanup() {
+            window.clearTimeout(timeout);
+            delete window[callbackName];
+            script.remove();
+          }
+
+          window[callbackName] = (response) => {
+            cleanup();
+            resolve(response || { ok: false });
+          };
+
+          script.onerror = () => {
+            cleanup();
+            reject(new Error("Google Apps Script request failed"));
+          };
+
+          script.src = url.toString();
+          document.head.appendChild(script);
+        });
       }
 
       function bindStaticEvents() {
         $("loginActionBtn").addEventListener("click", proceedWithTruck);
+        $("truckSelect").addEventListener("change", (event) => {
+          if (event.target.value) selectTruck(event.target.value);
+        });
         $("passwordInput").addEventListener("keydown", (event) => {
           if (event.key === "Enter") proceedWithTruck();
         });
@@ -2381,17 +2776,18 @@
       }
 
       function renderLoginScreen() {
-        const list = $("trucksList");
-        list.replaceChildren();
+        const select = $("truckSelect");
+        select.replaceChildren();
+
+        const placeholder = createEl("option", "", FOOD_TRUCKS.length ? "Choose your food truck" : "No food trucks found");
+        placeholder.value = "";
+        select.appendChild(placeholder);
 
         FOOD_TRUCKS.forEach((truck) => {
-          const button = createEl("button", "truck-option", truck.name);
-          button.type = "button";
-          button.dataset.truckId = truck.id;
-          button.setAttribute("role", "option");
-          button.setAttribute("aria-selected", "false");
-          button.addEventListener("click", () => selectTruck(truck.id));
-          list.appendChild(button);
+          const option = createEl("option", "", truck.name);
+          option.value = truck.id;
+          option.selected = truck.id === state.selectedTruckId;
+          select.appendChild(option);
         });
       }
 
@@ -2402,17 +2798,17 @@
         state.selectedTruckId = id;
         state.currentUser = truck;
 
-        document.querySelectorAll(".truck-option").forEach((button) => {
-          const isSelected = button.dataset.truckId === id;
-          button.classList.toggle("selected", isSelected);
-          button.setAttribute("aria-selected", String(isSelected));
-        });
+        $("truckSelect").value = id;
 
+        const hasPassword = hasTruckPassword(truck);
         $("passwordSection").classList.add("show");
-        $("passwordNote").textContent = `Selected vendor: ${truck.name}`;
-        $("loginActionBtn").textContent = "Continue";
+        $("passwordNote").textContent = hasPassword
+          ? `Enter password for ${truck.name}.`
+          : `${truck.name} does not have a password yet. Set one now.`;
+        $("loginActionBtn").textContent = hasPassword ? "Enter Password" : "Set a Password";
         $("loginStatus").textContent = "";
         $("passwordInput").value = "";
+        $("passwordInput").autocomplete = hasPassword ? "current-password" : "new-password";
         $("passwordInput").focus();
       }
 
@@ -2430,20 +2826,59 @@
         if (state.currentUser) {
           $("passwordInput").focus();
         } else {
-          const firstTruck = document.querySelector(".truck-option");
-          if (firstTruck) firstTruck.focus();
+          $("truckSelect").focus();
         }
       }
 
-      function proceedWithTruck() {
+      async function proceedWithTruck() {
         if (!state.currentUser) {
           $("loginStatus").textContent = "Select a truck before continuing.";
           return;
         }
 
-        if (!$("passwordInput").value.trim()) {
+        const typedPassword = $("passwordInput").value.trim();
+
+        if (!typedPassword) {
           $("loginStatus").textContent = "Enter a password before continuing.";
           return;
+        }
+
+        if (hasTruckPassword(state.currentUser)) {
+          if (typedPassword !== state.currentUser.password) {
+            $("loginStatus").textContent = "That password does not match the password in Google Sheets.";
+            $("passwordInput").select();
+            return;
+          }
+        } else {
+          $("loginActionBtn").disabled = true;
+          $("loginStatus").textContent = "Setting password...";
+
+          try {
+            const result = await callAppsScript({
+              action: "setPassword",
+              row: state.currentUser.row,
+              password: typedPassword
+            });
+
+            if (!result.offline && !result.ok) {
+              throw new Error(result.error || "Google Sheets did not accept the password update.");
+            }
+
+            state.currentUser.password = typedPassword;
+            const truck = FOOD_TRUCKS.find((item) => item.id === state.currentUser.id);
+            if (truck) truck.password = typedPassword;
+
+            if (result.offline) {
+              $("loginStatus").textContent = "Password set for this session. Add the Apps Script URL to save it to Google Sheets.";
+            }
+          } catch (error) {
+            console.warn("Password save failed", error);
+            $("loginStatus").textContent = "Could not save the password to Google Sheets. Try refresh, then try again.";
+            $("loginActionBtn").disabled = false;
+            return;
+          } finally {
+            $("loginActionBtn").disabled = false;
+          }
         }
 
         enterMainUI();
@@ -2486,11 +2921,9 @@
             $("passwordInput").value = "";
             $("loginActionBtn").textContent = "Select Truck";
             $("loginStatus").textContent = "";
+            $("truckSelect").value = "";
 
-            document.querySelectorAll(".truck-option").forEach((button) => {
-              button.classList.remove("selected");
-              button.setAttribute("aria-selected", "false");
-            });
+            renderLoginScreen();
           }
         });
       }
@@ -2662,9 +3095,6 @@
         if (remaining === 0) {
           message.textContent = `${property.name} is fully booked for ${monthLabel}.`;
           message.classList.remove("hidden");
-          grid.classList.add("hidden");
-          updateSelectedDatesDisplay();
-          return;
         }
 
         ["Mon", "Tue", "Wed", "Thu", "Fri"].forEach((day) => {
@@ -2723,8 +3153,22 @@
           return;
         }
 
+        const property = getPropertyById(state.currentPropertyId);
+        const isException = property && isExceptionDate(property.id, dateKey);
+
+        if (!isException && property && isNorthcreek(property)) {
+          const alreadySelectedThisWeek = Object.keys(state.selectedDates).some((selectedDate) => weekKey(selectedDate) === weekKey(dateKey));
+          if (alreadySelectedThisWeek) {
+            showBookingStatus("Northcreek can only be booked once per week.", true);
+            return;
+          }
+        } else if (!isException && Object.keys(state.selectedDates).length > 0) {
+          showBookingStatus("This property can only be booked once per month.", true);
+          return;
+        }
+
         const remaining = getSlotsRemaining(state.currentPropertyId, state.currentMonth);
-        if (Object.keys(state.selectedDates).length >= remaining) {
+        if (!isException && Object.keys(state.selectedDates).length >= remaining) {
           showBookingStatus(`Only ${remaining} slot${remaining === 1 ? "" : "s"} remain for this property this month.`, true);
           return;
         }
@@ -2810,7 +3254,7 @@
         };
       }
 
-      function submitBooking() {
+      async function submitBooking() {
         const property = getPropertyById(state.currentPropertyId);
         if (!property || !state.currentUser) return;
 
@@ -2822,8 +3266,9 @@
 
         const selected = Object.entries(state.selectedDates).sort(([left], [right]) => left.localeCompare(right));
         const remaining = getSlotsRemaining(property.id, state.currentMonth);
+        const nonExceptionSelected = selected.filter(([dateKey]) => !isExceptionDate(property.id, dateKey));
 
-        if (selected.length > remaining) {
+        if (nonExceptionSelected.length > remaining) {
           showBookingStatus(`Only ${remaining} slot${remaining === 1 ? "" : "s"} remain for ${formatMonth(state.currentMonth)}.`, true);
           return;
         }
@@ -2851,6 +3296,9 @@
 
         state.selectedDates = {};
         saveBookings();
+
+        await persistSubmittedBookings(selected, property);
+
         renderBookedDates();
         renderCarousel();
         renderGrid();
@@ -2860,6 +3308,27 @@
         $("calendarActions").classList.add("hidden");
         $("bookingStatus").textContent = "";
         $("confirmationState").classList.add("active");
+      }
+
+      async function persistSubmittedBookings(selected, property) {
+        if (!isBackendConfigured()) return;
+
+        try {
+          const results = await Promise.all(selected.map(([dateKey, times]) => callAppsScript({
+            action: "addBooking",
+            truckName: state.currentUser.name,
+            property: property.name,
+            date: dateKey,
+            startTime: times.startTime,
+            endTime: times.endTime
+          })));
+          const failed = results.find((result) => !result.offline && !result.ok);
+          if (failed) throw new Error(failed.error || "Google Sheets did not accept the booking update.");
+          await loadGoogleSheetsData({ silent: true });
+        } catch (error) {
+          console.warn("Booking save failed", error);
+          showBookingStatus("Booking was saved locally, but Google Sheets did not update.", true);
+        }
       }
 
       function checkYourBookings() {
@@ -2899,9 +3368,8 @@
           return;
         }
 
-        const bookings = getUserBookings()
-          .slice()
-          .sort((left, right) => `${left.date}${left.startTime}`.localeCompare(`${right.date}${right.startTime}`));
+        const bookings = getBookingsForCurrentTruck()
+          .sort((left, right) => `${left.date}${left.startTime || left.displayTime || ""}`.localeCompare(`${right.date}${right.startTime || right.displayTime || ""}`));
 
         if (!bookings.length) {
           list.appendChild(createEl("div", "booked-empty", "No bookings yet. Schedule your first visit."));
@@ -2922,21 +3390,23 @@
             inputs.append(start, createEl("div", "time-separator", "to"), end);
             item.appendChild(inputs);
           } else {
-            item.appendChild(createEl("div", "booked-item-time", `${times.startTime} to ${times.endTime}`));
+            item.appendChild(createEl("div", "booked-item-time", booking.displayTime || `${times.startTime} to ${times.endTime}`));
           }
 
-          const actions = createEl("div", "booked-item-actions");
-          if (isEditing) {
-            const save = createBookedAction("Save", () => saveBookingTime(booking.id));
-            const close = createBookedAction("Close", cancelEditBooking, true);
-            actions.append(save, close);
-          } else {
-            const edit = createBookedAction("Edit", () => editBooking(booking.id));
-            const cancel = createBookedAction("Cancel", () => cancelBookingItem(booking.id), true);
-            actions.append(edit, cancel);
+          if (booking.source !== "sheet") {
+            const actions = createEl("div", "booked-item-actions");
+            if (isEditing) {
+              const save = createBookedAction("Save", () => saveBookingTime(booking.id));
+              const close = createBookedAction("Close", cancelEditBooking, true);
+              actions.append(save, close);
+            } else {
+              const edit = createBookedAction("Edit", () => editBooking(booking.id));
+              const cancel = createBookedAction("Cancel", () => cancelBookingItem(booking.id), true);
+              actions.append(edit, cancel);
+            }
+            item.appendChild(actions);
           }
 
-          item.appendChild(actions);
           list.appendChild(item);
         });
       }
@@ -3019,10 +3489,29 @@
         if (!property) return;
         state.previousFocus = document.activeElement;
         $("detailsModalTitle").textContent = property.name;
-        $("detailsModalDescription").textContent = property.description;
+        renderDetailsDescription(property.description);
         $("detailsModalAddress").textContent = property.address;
         $("detailsModal").classList.add("active");
         $("detailsCloseBtn").focus();
+      }
+
+      function renderDetailsDescription(description) {
+        const container = $("detailsModalDescription");
+        const paragraphs = String(description || "")
+          .split(/\n+/)
+          .map((paragraph) => paragraph.trim())
+          .filter(Boolean);
+
+        container.replaceChildren();
+
+        if (!paragraphs.length) {
+          container.textContent = "-";
+          return;
+        }
+
+        paragraphs.forEach((paragraph) => {
+          container.appendChild(createEl("p", "details-paragraph", paragraph));
+        });
       }
 
       function closeDetails() {
@@ -3051,27 +3540,117 @@
         return state.bookings[state.currentUser.id];
       }
 
+      function getBookingsForCurrentTruck() {
+        if (!state.currentUser) return [];
+        const sheetBookings = state.sheetBookings.filter((booking) => sameTruckName(booking.truckName, state.currentUser.name));
+        const seen = new Set();
+
+        return [...sheetBookings, ...getUserBookings()].filter((booking) => {
+          const key = [
+            normalizeName(booking.propName),
+            booking.date,
+            booking.displayTime || `${booking.startTime || ""} to ${booking.endTime || ""}`
+          ].join("|");
+
+          if (seen.has(key)) return false;
+          seen.add(key);
+          return true;
+        });
+      }
+
       function getAllBookings() {
         return Object.values(state.bookings).flat();
       }
 
       function getBookedCount(propertyId, monthDate) {
         const month = monthKey(monthDate);
-        const occupiedCount = (OCCUPIED_DATES[propertyId] || []).filter((dateKey) => dateKey.startsWith(month)).length;
-        const bookingCount = getAllBookings().filter((booking) => booking.propId === propertyId && booking.date.startsWith(month)).length;
-        return occupiedCount + bookingCount;
+        const property = getPropertyById(propertyId);
+        const dates = getAllBookedDatesForProperty(propertyId);
+
+        if (isNorthcreek(property)) {
+          const bookableWeeks = getBookableWeekKeysInMonth(monthDate);
+          return new Set(dates.map(weekKey).filter((week) => bookableWeeks.has(week))).size;
+        }
+
+        return dates.some((dateKey) => dateKey.startsWith(month)) ? 1 : 0;
       }
 
       function getSlotsRemaining(propertyId, monthDate) {
         const property = getPropertyById(propertyId);
         if (!property) return 0;
-        return Math.max(0, property.totalSlots - getBookedCount(propertyId, monthDate));
+        return Math.max(0, getMonthlyCapacity(property, monthDate) - getBookedCount(propertyId, monthDate));
       }
 
       function isDateUnavailable(propertyId, dateKey) {
-        const occupied = (OCCUPIED_DATES[propertyId] || []).includes(dateKey);
-        const booked = getAllBookings().some((booking) => booking.propId === propertyId && booking.date === dateKey);
-        return occupied || booked;
+        if (isExceptionDate(propertyId, dateKey)) return false;
+
+        const property = getPropertyById(propertyId);
+        const bookedDates = getAllBookedDatesForProperty(propertyId);
+
+        if (isNorthcreek(property)) {
+          const targetWeek = weekKey(dateKey);
+          return bookedDates.some((bookedDate) => weekKey(bookedDate) === targetWeek);
+        }
+
+        const targetMonth = monthKey(dateKey);
+        return bookedDates.some((bookedDate) => monthKey(bookedDate) === targetMonth);
+      }
+
+      function getAllBookedDatesForProperty(propertyId) {
+        const sheetDates = OCCUPIED_DATES[propertyId] || [];
+        const localDates = getAllBookings()
+          .filter((booking) => booking.propId === propertyId)
+          .map((booking) => booking.date);
+        return [...new Set([...sheetDates, ...localDates])];
+      }
+
+      function getMonthlyCapacity(property, monthDate) {
+        if (isNorthcreek(property)) return countBookableWeeksInMonth(monthDate);
+        return 1;
+      }
+
+      function isNorthcreek(property) {
+        return normalizeName(property?.name) === "northcreek";
+      }
+
+      function countBookableWeeksInMonth(monthDate) {
+        return getBookableWeekKeysInMonth(monthDate).size;
+      }
+
+      function getBookableWeekKeysInMonth(monthDate) {
+        const year = monthDate.getFullYear();
+        const month = monthDate.getMonth();
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+        const weeks = new Set();
+
+        for (let day = 1; day <= daysInMonth; day += 1) {
+          const date = new Date(year, month, day);
+          const dayOfWeek = date.getDay();
+          if (dayOfWeek !== 0 && dayOfWeek !== 6) weeks.add(weekKey(toDateKey(date)));
+        }
+
+        return weeks;
+      }
+
+      function weekKey(dateKey) {
+        const date = dateFromKey(dateKey);
+        const day = date.getDay() || 7;
+        date.setDate(date.getDate() + 4 - day);
+        const yearStart = new Date(date.getFullYear(), 0, 1);
+        const week = Math.ceil((((date - yearStart) / 86400000) + 1) / 7);
+        return `${date.getFullYear()}-W${String(week).padStart(2, "0")}`;
+      }
+
+      function hasTruckPassword(truck) {
+        return Boolean(String(truck?.password || "").trim());
+      }
+
+      function isExceptionDate(propertyId, dateKey) {
+        return (EXCEPTION_DATES[propertyId] || []).includes(dateKey);
+      }
+
+      function sameTruckName(left, right) {
+        return normalizeName(left) === normalizeName(right);
       }
 
       function buildDemoOccupiedDates() {
