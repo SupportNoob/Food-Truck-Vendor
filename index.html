@@ -143,7 +143,16 @@
       background: rgba(47, 111, 209, 0.13);
       color: var(--accent-light);
       font-size: 24px;
+      overflow: hidden;
       transition: background 0.3s ease, border-color 0.3s ease;
+    }
+
+    .logo-image {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      padding: 5px;
     }
 
     html.light-mode .logo-badge {
@@ -178,9 +187,10 @@
     .logo-sub {
       display: block;
       color: var(--muted);
-      font-size: 10px;
+      font-size: 9.5px;
       font-weight: 700;
       letter-spacing: 1.6px;
+      line-height: 1.25;
       text-transform: uppercase;
     }
 
@@ -203,6 +213,14 @@
       color: var(--muted);
       font-size: 12px;
       letter-spacing: 0.5px;
+    }
+
+    .current-date-time {
+      color: var(--accent-light);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      white-space: nowrap;
     }
 
     .refresh-btn {
@@ -896,11 +914,31 @@
       height: 100%;
       object-fit: cover;
       opacity: 0;
-      transition: opacity 0.22s ease;
+      transform: scale(1.01);
+      transition: opacity 0.18s ease;
+      will-change: clip-path, opacity, transform;
     }
 
     .has-photo .property-photo {
       opacity: 1;
+    }
+
+    .card-image-large.photo-wipe .property-photo {
+      animation: photo-wipe 0.46s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    @keyframes photo-wipe {
+      from {
+        clip-path: inset(0 100% 0 0);
+        filter: blur(5px);
+        transform: scale(1.045);
+      }
+
+      to {
+        clip-path: inset(0);
+        filter: blur(0);
+        transform: scale(1.01);
+      }
     }
 
     .has-photo .property-mark {
@@ -979,6 +1017,43 @@
       text-transform: uppercase;
     }
 
+    .image-progress {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 4;
+      height: 4px;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.14);
+    }
+
+    .image-progress.hidden {
+      display: none;
+    }
+
+    .image-progress span {
+      display: block;
+      width: 0;
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent-light), var(--success));
+      box-shadow: 0 0 18px rgba(120, 168, 255, 0.48);
+    }
+
+    .image-progress.is-running span {
+      animation: gallery-progress var(--gallery-duration, 6500ms) linear forwards;
+    }
+
+    @keyframes gallery-progress {
+      from {
+        width: 0;
+      }
+
+      to {
+        width: 100%;
+      }
+    }
+
     .property-mark {
       position: relative;
       display: grid;
@@ -1018,7 +1093,18 @@
     }
 
     .card-name-large {
-      margin-bottom: 22px;
+      margin-bottom: 8px;
+    }
+
+    .card-address-large,
+    .detail-address {
+      max-width: 620px;
+      margin: 0 auto 24px;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1.5;
+      letter-spacing: 0.2px;
     }
 
     .card-meta-large,
@@ -1190,8 +1276,9 @@
       flex-direction: column;
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      background: linear-gradient(135deg, rgba(47, 111, 209, 0.1), rgba(16, 21, 33, 0.64));
-      box-shadow: 0 14px 36px rgba(0, 0, 0, 0.22);
+      background: #1f2024;
+      box-shadow: 0 16px 38px rgba(0, 0, 0, 0.26);
+      cursor: pointer;
       transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease, background 0.3s ease;
     }
 
@@ -1217,6 +1304,21 @@
       background: var(--property-gradient, linear-gradient(135deg, #14233f, #152238));
     }
 
+    .property-type-badge {
+      position: absolute;
+      top: 9px;
+      left: 10px;
+      z-index: 3;
+      padding: 5px 15px;
+      border-radius: 999px;
+      background: rgba(17, 24, 39, 0.72);
+      color: #ffffff;
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 1;
+      backdrop-filter: blur(8px);
+    }
+
     .card-image .property-mark {
       width: 74px;
       height: 74px;
@@ -1228,17 +1330,18 @@
       display: flex;
       flex: 1;
       flex-direction: column;
-      padding: 22px;
-      text-align: center;
+      padding: 14px 14px 16px;
+      text-align: left;
     }
 
     .card-name {
-      margin-bottom: 12px;
+      margin-bottom: 8px;
       color: #fff;
-      font-family: "Bebas Neue", sans-serif;
-      font-size: 28px;
-      line-height: 1.05;
-      letter-spacing: 1px;
+      font-family: "DM Sans", sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      line-height: 1.25;
+      letter-spacing: 0;
       transition: color 0.3s ease;
     }
 
@@ -1266,6 +1369,30 @@
 
     .card-action {
       margin-top: auto;
+    }
+
+    .card-divider {
+      width: 100%;
+      height: 2px;
+      margin: 0 0 11px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--accent-light), transparent 82%);
+    }
+
+    .card-address {
+      margin-top: auto;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .card-booking-hint {
+      margin-top: 12px;
+      color: var(--accent-light);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 1.1px;
+      text-transform: uppercase;
     }
 
     .booking-detail-view {
@@ -1649,6 +1776,45 @@
       text-transform: uppercase;
     }
 
+    .booking-filter {
+      display: grid;
+      gap: 7px;
+      margin-bottom: 16px;
+      text-align: left;
+    }
+
+    .booking-filter label {
+      color: var(--accent-light);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+    }
+
+    .booking-filter-select {
+      width: 100%;
+      min-height: 40px;
+      padding: 9px 12px;
+      border: 1px solid rgba(120, 168, 255, 0.28);
+      border-radius: 6px;
+      background: rgba(0, 0, 0, 0.24);
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    html.light-mode .booking-filter-select {
+      background: #ffffff;
+      border-color: #cbd5e1;
+      color: #1f2937;
+    }
+
+    .booking-filter-select:focus {
+      border-color: var(--accent-light);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(120, 168, 255, 0.12);
+    }
+
     .booked-list {
       display: grid;
       gap: 13px;
@@ -2005,6 +2171,13 @@
         border: 0;
         padding: 0;
         font-size: 10px;
+        flex-wrap: wrap;
+        row-gap: 4px;
+      }
+
+      .current-date-time {
+        flex-basis: 100%;
+        font-size: 10px;
       }
 
       .refresh-time {
@@ -2162,15 +2335,18 @@
   </div>
 
   <header class="app-header hidden" id="appHeader">
-    <a class="logo" href="#" aria-label="Alturas Capital Partners vendor portal">
-      <span class="logo-badge" aria-hidden="true">🏢</span>
+    <a class="logo" href="#" aria-label="Alturas Capital Partners Food Truck Vendor Booking Portal">
+      <span class="logo-badge" aria-hidden="true">
+        <img class="logo-image" src="https://supportnoob.github.io/Food-Truck-Vendor/acp.png" alt="" />
+      </span>
       <span class="logo-copy">
         <span class="logo-main">ALTURAS CAPITAL PARTNERS</span>
-        <span class="logo-sub">Vendor Portal</span>
+        <span class="logo-sub">Food Truck Vendor Booking Portal</span>
       </span>
     </a>
     <div class="header-controls">
       <div class="refresh-section">
+        <span class="current-date-time" id="currentDateTime">Today</span>
         <span class="refresh-time" id="refreshTime">Updated just now</span>
         <button class="refresh-btn" type="button" id="refreshBtn" aria-label="Refresh data">
           <svg class="refresh-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -2195,7 +2371,7 @@
         <div class="hero-eyebrow">Vendor Scheduling</div>
         <div class="hero-rule" aria-hidden="true"></div>
         <h2 id="pageTitle">Food Truck<span>Booking System</span></h2>
-        <p class="hero-sub">Get in front of hungry tenants across busy office locations.</p>
+        <p class="hero-sub">Get in front of hungry tenants across busy office locations in Colorado Springs, Colorado.</p>
 
         <div class="view-toggle" aria-label="Property view">
           <button class="toggle-btn active" type="button" data-view="carousel" aria-pressed="true">Carousel View</button>
@@ -2214,9 +2390,11 @@
                 <span class="image-counter" id="propertyImageCounter">1 / 1</span>
                 <button class="image-control-btn" type="button" id="nextImageBtn" aria-label="Next building photo">›</button>
               </div>
+              <div class="image-progress hidden" id="propertyImageProgress" aria-hidden="true"><span></span></div>
             </div>
             <div class="card-content-large">
               <h3 class="card-name-large" id="carouselName">Loading</h3>
+              <p class="card-address-large" id="carouselAddress">-</p>
               <div class="card-meta-large" aria-label="Property summary">
                 <div class="meta-item">
                   <div class="meta-value" id="carouselEmployees">-</div>
@@ -2224,7 +2402,7 @@
                 </div>
                 <div class="meta-item">
                   <div class="meta-value" id="carouselFreq">-</div>
-                  <div class="meta-label">Visits/Week</div>
+                  <div class="meta-label" id="carouselFreqLabel">Visit/Week</div>
                 </div>
                 <div class="meta-item">
                   <div class="meta-value" id="carouselBooked">-</div>
@@ -2267,6 +2445,7 @@
             <div class="property-mark" id="detailMark">NC</div>
           </div>
           <h3 class="detail-name" id="detailName">Property Name</h3>
+          <p class="detail-address" id="detailAddress">-</p>
           <div class="detail-meta">
             <div class="detail-meta-item">
               <div class="detail-meta-value" id="detailEmployees">-</div>
@@ -2274,7 +2453,7 @@
             </div>
             <div class="detail-meta-item">
               <div class="detail-meta-value" id="detailFreq">-</div>
-              <div class="detail-meta-label">Visits/Week</div>
+              <div class="detail-meta-label" id="detailFreqLabel">Visit/Week</div>
             </div>
             <div class="detail-meta-item">
               <div class="detail-meta-value" id="detailSlots">-</div>
@@ -2323,7 +2502,15 @@
     <aside class="sidebar-panel" aria-labelledby="bookedTitle">
       <section class="booked-panel" id="bookedPanel">
         <h2 class="booked-title" id="bookedTitle">Your Booked Dates</h2>
-        <span class="booked-subtitle">Upcoming visits</span>
+        <span class="booked-subtitle" id="bookedSubtitle">Upcoming visits</span>
+        <div class="booking-filter">
+          <label for="bookingFilterSelect">Show</label>
+          <select class="booking-filter-select" id="bookingFilterSelect">
+            <option value="upcoming">Upcoming visits</option>
+            <option value="completed">Completed visits</option>
+            <option value="canceled">Canceled visits</option>
+          </select>
+        </div>
         <div class="booked-list" id="bookedList">
           <div class="booked-empty">No bookings yet. Schedule your first visit.</div>
         </div>
@@ -2380,6 +2567,8 @@
         exceptionsRange: "A1:Z1000",
         appsScriptUrl: ""
       };
+      const PROPERTY_IMAGE_AUTOPLAY_MS = 6500;
+      const MOUNTAIN_TIME_ZONE = "America/Denver";
 
       let FOOD_TRUCKS = [
         { id: "truck-1", name: "Taco Supreme", password: "", row: 2 },
@@ -2396,7 +2585,7 @@
           mark: "NC",
           aliases: ["Northcreek"],
           employees: 500,
-          frequency: 2,
+          frequency: 1,
           totalSlots: 8,
           gradient: "linear-gradient(135deg, #1c4f8f, #12314f)",
           images: [
@@ -2414,7 +2603,7 @@
           mark: "SC",
           aliases: ["Space Center", "985 Space Center"],
           employees: "50-80",
-          frequency: 2,
+          frequency: 1,
           totalSlots: 8,
           gradient: "linear-gradient(135deg, #31576e, #183242)",
           images: [
@@ -2432,7 +2621,7 @@
           mark: "NP",
           aliases: ["Newport", "1055 Newport"],
           employees: "50-80",
-          frequency: 3,
+          frequency: 1,
           totalSlots: 12,
           gradient: "linear-gradient(135deg, #5b4f8f, #24244d)",
           images: [
@@ -2468,7 +2657,7 @@
           mark: "PR",
           aliases: ["Presidio"],
           employees: 150,
-          frequency: 3,
+          frequency: 1,
           totalSlots: 12,
           gradient: "linear-gradient(135deg, #7b5948, #362922)",
           images: [
@@ -2503,8 +2692,11 @@
         selectedTruckId: null,
         currentCarouselIndex: 0,
         propertyImageIndexes: {},
+        propertyImageTimer: null,
+        preloadedImages: new Set(),
         currentMonth: new Date(MIN_MONTH),
         activeView: "carousel",
+        bookingFilter: "upcoming",
         currentPropertyId: null,
         selectedDates: {},
         sheetBookings: [],
@@ -2521,11 +2713,14 @@
 
       function init() {
         initTheme();
+        updateHeaderClock();
         renderLoginScreen();
         bindStaticEvents();
+        preloadPropertyImages();
         renderCarousel();
         renderGrid();
         loadGoogleSheetsData({ silent: true });
+        window.setInterval(updateHeaderClock, 60000);
       }
 
       function initTheme() {
@@ -2550,12 +2745,15 @@
 
       function updateRefreshTime() {
         state.lastRefresh = new Date();
-        const now = new Date();
-        const hours = now.getHours();
-        const minutes = String(now.getMinutes()).padStart(2, "0");
-        const ampm = hours >= 12 ? "PM" : "AM";
-        const displayHours = hours % 12 || 12;
-        $("refreshTime").textContent = `Updated ${displayHours}:${minutes} ${ampm}`;
+        updateHeaderClock();
+        $("refreshTime").textContent = `Updated ${formatMountainTime(state.lastRefresh)}`;
+      }
+
+      function updateHeaderClock() {
+        const currentDateTime = $("currentDateTime");
+        if (currentDateTime) {
+          currentDateTime.textContent = `${formatMountainDate(new Date())} · ${formatMountainTime(new Date())}`;
+        }
       }
 
       async function refreshData() {
@@ -2847,6 +3045,10 @@
         $("refreshBtn").addEventListener("click", refreshData);
         $("prevImageBtn").addEventListener("click", () => changePropertyImage(-1));
         $("nextImageBtn").addEventListener("click", () => changePropertyImage(1));
+        $("bookingFilterSelect").addEventListener("change", (event) => {
+          state.bookingFilter = event.target.value;
+          renderBookedDates();
+        });
         $("confirmCancelBtn").addEventListener("click", cancelConfirmation);
         $("confirmProceedBtn").addEventListener("click", proceedConfirmation);
 
@@ -3053,8 +3255,10 @@
         const remaining = getSlotsRemaining(property.id, state.currentMonth);
 
         $("carouselName").textContent = property.name;
+        $("carouselAddress").textContent = property.address;
         $("carouselEmployees").textContent = property.employees.toLocaleString("en-US");
-        $("carouselFreq").textContent = property.frequency;
+        $("carouselFreq").textContent = getVisitFrequencyValue(property);
+        $("carouselFreqLabel").textContent = getVisitFrequencyLabel(property);
         $("carouselBooked").textContent = booked;
         $("carouselSlots").textContent = remaining;
         $("carouselMonth").textContent = formatMonth(state.currentMonth);
@@ -3070,21 +3274,26 @@
         const visual = $("carouselVisual");
         const photo = $("carouselPhoto");
         const controls = $("propertyImageControls");
+        const progress = $("propertyImageProgress");
         const counter = $("propertyImageCounter");
         const imageIndex = getPropertyImageIndex(property);
 
         visual.classList.toggle("has-photo", Boolean(images.length));
         controls.classList.toggle("hidden", images.length <= 1);
+        progress.classList.toggle("hidden", images.length <= 1);
         photo.alt = images.length ? `${property.name} building photo ${imageIndex + 1}` : "";
 
         if (!images.length) {
+          stopPropertyImageAutoplay();
           photo.removeAttribute("src");
           counter.textContent = "0 / 0";
           return;
         }
 
-        setPhotoSource(photo, images[imageIndex], visual);
+        setPhotoSource(photo, images[imageIndex], visual, true);
         counter.textContent = `${imageIndex + 1} / ${images.length}`;
+        preloadPropertyImages(property, imageIndex);
+        schedulePropertyImageAutoplay(images.length > 1);
       }
 
       function changePropertyImage(direction) {
@@ -3141,6 +3350,11 @@
       function showActiveBrowseView() {
         $("carouselView").classList.toggle("hidden", state.activeView !== "carousel");
         $("gridView").classList.toggle("hidden", state.activeView !== "grid");
+        if (state.activeView === "carousel") {
+          renderCarousel();
+        } else {
+          stopPropertyImageAutoplay();
+        }
       }
 
       function renderGrid() {
@@ -3148,9 +3362,17 @@
         grid.replaceChildren();
 
         PROPERTIES.forEach((property) => {
-          const remaining = getSlotsRemaining(property.id, state.currentMonth);
-          const booked = getSheetBookedTotal(property.id);
           const card = createEl("article", "property-card");
+          card.tabIndex = 0;
+          card.setAttribute("role", "button");
+          card.setAttribute("aria-label", `Book ${property.name}`);
+          card.addEventListener("click", () => goToPropertyBooking(property.id));
+          card.addEventListener("keydown", (event) => {
+            if (event.key === "Enter" || event.key === " ") {
+              event.preventDefault();
+              goToPropertyBooking(property.id);
+            }
+          });
 
           const image = createEl("div", "card-image");
           image.style.setProperty("--property-gradient", property.gradient);
@@ -3159,24 +3381,16 @@
             image.classList.add("has-photo");
             image.appendChild(photo);
           }
+          image.appendChild(createEl("div", "property-type-badge", "Office"));
           const mark = createEl("div", "property-mark", property.mark);
           image.appendChild(mark);
 
           const body = createEl("div", "card-body");
           const name = createEl("h3", "card-name", property.name);
-          const stats = createEl("div", "card-stats");
-          stats.appendChild(statLine(property.employees.toLocaleString("en-US"), " tenants"));
-          stats.appendChild(statLine(`${property.frequency}x`, " per week"));
-          stats.appendChild(statLine(remaining === 0 ? "Fully booked" : String(remaining), remaining === 0 ? "" : " slots left", remaining === 0));
-          stats.appendChild(statLine(String(booked), " booked"));
+          const divider = createEl("div", "card-divider");
+          const address = createEl("div", "card-address", property.address);
 
-          const action = createEl("div", "card-action");
-          const button = createEl("button", "btn btn-secondary", "Book Now");
-          button.type = "button";
-          button.addEventListener("click", () => goToPropertyBooking(property.id));
-          action.appendChild(button);
-
-          body.append(name, stats, action);
+          body.append(name, divider, address);
           card.append(image, body);
           grid.appendChild(card);
         });
@@ -3216,15 +3430,78 @@
         return photo;
       }
 
-      function setPhotoSource(photo, src, visual = null) {
+      function setPhotoSource(photo, src, visual = null, animate = false) {
+        if (photo.dataset.src === src && photo.getAttribute("src")) {
+          if (visual) visual.classList.add("has-photo");
+          return;
+        }
+
         photo.onload = () => {
           if (visual) visual.classList.add("has-photo");
+          if (animate && visual) animatePhotoWipe(visual);
         };
         photo.onerror = () => {
           photo.removeAttribute("src");
+          delete photo.dataset.src;
           if (visual) visual.classList.remove("has-photo");
         };
+        photo.decoding = "async";
+        photo.loading = "eager";
+        photo.dataset.src = src;
         photo.src = src;
+      }
+
+      function schedulePropertyImageAutoplay(shouldRun) {
+        stopPropertyImageAutoplay();
+
+        const progress = $("propertyImageProgress");
+        if (!progress || !shouldRun || state.activeView !== "carousel" || $("carouselView").classList.contains("hidden")) return;
+
+        progress.style.setProperty("--gallery-duration", `${PROPERTY_IMAGE_AUTOPLAY_MS}ms`);
+        restartImageProgress(progress);
+        state.propertyImageTimer = window.setTimeout(() => changePropertyImage(1), PROPERTY_IMAGE_AUTOPLAY_MS);
+      }
+
+      function stopPropertyImageAutoplay() {
+        if (state.propertyImageTimer) {
+          window.clearTimeout(state.propertyImageTimer);
+          state.propertyImageTimer = null;
+        }
+
+        const progress = $("propertyImageProgress");
+        if (progress) progress.classList.remove("is-running");
+      }
+
+      function restartImageProgress(progress) {
+        progress.classList.remove("is-running");
+        void progress.offsetWidth;
+        progress.classList.add("is-running");
+      }
+
+      function animatePhotoWipe(visual) {
+        visual.classList.remove("photo-wipe");
+        void visual.offsetWidth;
+        visual.classList.add("photo-wipe");
+        window.setTimeout(() => visual.classList.remove("photo-wipe"), 520);
+      }
+
+      function preloadPropertyImages(property = null, currentIndex = 0) {
+        const properties = property ? [property] : PROPERTIES;
+
+        properties.forEach((item) => {
+          const images = getPropertyImages(item);
+          const orderedImages = images.length
+            ? [images[currentIndex % images.length], ...images.filter((_, index) => index !== currentIndex % images.length)]
+            : [];
+
+          orderedImages.forEach((src) => {
+            if (!src || state.preloadedImages.has(src)) return;
+            state.preloadedImages.add(src);
+            const img = new Image();
+            img.decoding = "async";
+            img.src = src;
+          });
+        });
       }
 
       function getPropertyImages(property) {
@@ -3241,14 +3518,17 @@
 
       function viewBookingDetail() {
         const property = getCurrentProperty();
+        stopPropertyImageAutoplay();
         state.currentPropertyId = property.id;
         state.selectedDates = {};
         state.editingBookingId = null;
         state.editingDraft = null;
 
         $("detailName").textContent = property.name;
+        $("detailAddress").textContent = property.address;
         $("detailEmployees").textContent = property.employees.toLocaleString("en-US");
-        $("detailFreq").textContent = property.frequency;
+        $("detailFreq").textContent = getVisitFrequencyValue(property);
+        $("detailFreqLabel").textContent = getVisitFrequencyLabel(property);
         $("detailSlots").textContent = getSlotsRemaining(property.id, state.currentMonth);
         $("detailMark").textContent = property.mark;
         $("detailVisual").style.setProperty("--property-gradient", property.gradient);
@@ -3568,18 +3848,20 @@
 
       function renderBookedDates() {
         const list = $("bookedList");
+        const filterSelect = $("bookingFilterSelect");
         list.replaceChildren();
+        if (filterSelect) filterSelect.value = state.bookingFilter;
+        $("bookedSubtitle").textContent = getBookingFilterLabel(state.bookingFilter);
 
         if (!state.currentUser) {
           list.appendChild(createEl("div", "booked-empty", "Log in to view bookings."));
           return;
         }
 
-        const bookings = getBookingsForCurrentTruck()
-          .sort((left, right) => `${left.date}${left.startTime || left.displayTime || ""}`.localeCompare(`${right.date}${right.startTime || right.displayTime || ""}`));
+        const bookings = getFilteredBookingsForCurrentTruck();
 
         if (!bookings.length) {
-          list.appendChild(createEl("div", "booked-empty", "No bookings yet. Schedule your first visit."));
+          list.appendChild(createEl("div", "booked-empty", getBookingEmptyMessage()));
           return;
         }
 
@@ -3600,7 +3882,7 @@
             item.appendChild(createEl("div", "booked-item-time", booking.displayTime || `${times.startTime} to ${times.endTime}`));
           }
 
-          if (booking.source !== "sheet") {
+          if (booking.source !== "sheet" && isUpcomingBooking(booking)) {
             const actions = createEl("div", "booked-item-actions");
             if (isEditing) {
               const save = createBookedAction("Save", () => saveBookingTime(booking.id));
@@ -3616,6 +3898,59 @@
 
           list.appendChild(item);
         });
+      }
+
+      function getFilteredBookingsForCurrentTruck() {
+        return getBookingsForCurrentTruck()
+          .filter((booking) => getBookingDisplayStatus(booking) === state.bookingFilter)
+          .sort(sortBookingsForDisplay);
+      }
+
+      function getBookingDisplayStatus(booking) {
+        if (booking.status === "canceled") return "canceled";
+        return dateFromKey(booking.date) < TODAY ? "completed" : "upcoming";
+      }
+
+      function isUpcomingBooking(booking) {
+        return getBookingDisplayStatus(booking) === "upcoming";
+      }
+
+      function sortBookingsForDisplay(left, right) {
+        const leftValue = getBookingSortValue(left);
+        const rightValue = getBookingSortValue(right);
+        if (state.bookingFilter === "completed" || state.bookingFilter === "canceled") {
+          return rightValue - leftValue;
+        }
+        return leftValue - rightValue;
+      }
+
+      function getBookingSortValue(booking) {
+        return dateFromKey(booking.date).getTime() + getBookingTimeOffset(booking);
+      }
+
+      function getBookingTimeOffset(booking) {
+        const rawTime = booking.startTime || String(booking.displayTime || "").match(/\d{1,2}:\d{2}\s*[AP]M/i)?.[0] || "";
+        const match = rawTime.match(/^(\d{1,2}):(\d{2})\s*([AP]M)$/i);
+        if (!match) return 0;
+
+        let hours = Number(match[1]);
+        const minutes = Number(match[2]);
+        const meridiem = match[3].toUpperCase();
+        if (meridiem === "PM" && hours !== 12) hours += 12;
+        if (meridiem === "AM" && hours === 12) hours = 0;
+        return ((hours * 60) + minutes) * 60000;
+      }
+
+      function getBookingEmptyMessage() {
+        if (state.bookingFilter === "completed") return "No completed visits for this truck.";
+        if (state.bookingFilter === "canceled") return "No canceled visits for this truck.";
+        return "No upcoming visits. Schedule your first visit.";
+      }
+
+      function getBookingFilterLabel(filter) {
+        if (filter === "completed") return "Completed visits";
+        if (filter === "canceled") return "Canceled visits";
+        return "Upcoming visits";
       }
 
       function createBookedAction(label, onClick, danger = false) {
@@ -3673,7 +4008,11 @@
           title: "Cancel Booking",
           message: "Are you sure you want to cancel this booking?",
           onConfirm: () => {
-            state.bookings[state.currentUser.id] = getUserBookings().filter((booking) => booking.id !== id);
+            const booking = getUserBookings().find((item) => item.id === id);
+            if (booking) {
+              booking.status = "canceled";
+              booking.canceledAt = new Date().toISOString();
+            }
             state.editingBookingId = null;
             state.editingDraft = null;
             saveBookings();
@@ -3766,7 +4105,7 @@
       }
 
       function getAllBookings() {
-        return Object.values(state.bookings).flat();
+        return Object.values(state.bookings).flat().filter((booking) => booking.status !== "canceled");
       }
 
       function getBookedCount(propertyId, monthDate) {
@@ -3818,6 +4157,14 @@
       function getMonthlyCapacity(property, monthDate) {
         if (isNorthcreek(property)) return countBookableWeeksInMonth(monthDate);
         return 1;
+      }
+
+      function getVisitFrequencyValue(property) {
+        return "1";
+      }
+
+      function getVisitFrequencyLabel(property) {
+        return isNorthcreek(property) ? "Visit/Week" : "Visit/Month";
       }
 
       function isNorthcreek(property) {
@@ -3949,6 +4296,23 @@
 
       function formatMonth(date) {
         return date.toLocaleDateString("en-US", { month: "long", year: "numeric" });
+      }
+
+      function formatMountainDate(date) {
+        return date.toLocaleDateString("en-US", {
+          timeZone: MOUNTAIN_TIME_ZONE,
+          month: "short",
+          day: "numeric",
+          year: "numeric"
+        });
+      }
+
+      function formatMountainTime(date) {
+        return `${date.toLocaleTimeString("en-US", {
+          timeZone: MOUNTAIN_TIME_ZONE,
+          hour: "numeric",
+          minute: "2-digit"
+        })} MST`;
       }
 
       function formatShortDate(dateKey) {
