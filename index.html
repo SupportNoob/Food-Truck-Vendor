@@ -134,13 +134,13 @@
 
     .logo-badge {
       display: grid;
-      width: 44px;
-      height: 44px;
+      width: 86px;
+      height: 50px;
       flex: 0 0 auto;
       place-items: center;
-      border: 1px solid rgba(120, 168, 255, 0.28);
-      border-radius: var(--radius);
-      background: rgba(47, 111, 209, 0.13);
+      border: 0;
+      border-radius: 0;
+      background: transparent;
       color: var(--accent-light);
       font-size: 24px;
       overflow: hidden;
@@ -152,12 +152,12 @@
       width: 100%;
       height: 100%;
       object-fit: contain;
-      padding: 5px;
+      padding: 0;
     }
 
     html.light-mode .logo-badge {
-      border-color: rgba(47, 111, 209, 0.3);
-      background: rgba(47, 111, 209, 0.08);
+      border-color: transparent;
+      background: transparent;
     }
 
     .logo-copy {
@@ -221,6 +221,11 @@
       font-weight: 700;
       letter-spacing: 0.5px;
       white-space: nowrap;
+    }
+
+    .refresh-divider {
+      color: var(--border);
+      font-weight: 800;
     }
 
     .refresh-btn {
@@ -914,31 +919,56 @@
       height: 100%;
       object-fit: cover;
       opacity: 0;
-      transform: scale(1.01);
-      transition: opacity 0.18s ease;
-      will-change: clip-path, opacity, transform;
+      transform: translateX(0);
+      transition: none;
+      will-change: opacity, transform;
     }
 
     .has-photo .property-photo {
       opacity: 1;
     }
 
-    .card-image-large.photo-wipe .property-photo {
-      animation: photo-wipe 0.46s cubic-bezier(0.22, 1, 0.36, 1);
+    .card-image-large .property-photo-next {
+      z-index: 2;
+      opacity: 0;
     }
 
-    @keyframes photo-wipe {
-      from {
-        clip-path: inset(0 100% 0 0);
-        filter: blur(5px);
-        transform: scale(1.045);
-      }
+    .card-image-large.photo-slide-forward .property-photo-current {
+      animation: photo-current-left 0.46s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
 
-      to {
-        clip-path: inset(0);
-        filter: blur(0);
-        transform: scale(1.01);
-      }
+    .card-image-large.photo-slide-forward .property-photo-next {
+      opacity: 1;
+      animation: photo-next-from-right 0.46s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    .card-image-large.photo-slide-backward .property-photo-current {
+      animation: photo-current-right 0.46s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    .card-image-large.photo-slide-backward .property-photo-next {
+      opacity: 1;
+      animation: photo-next-from-left 0.46s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    @keyframes photo-current-left {
+      from { transform: translateX(0); opacity: 1; }
+      to { transform: translateX(-100%); opacity: 1; }
+    }
+
+    @keyframes photo-next-from-right {
+      from { transform: translateX(100%); opacity: 1; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    @keyframes photo-current-right {
+      from { transform: translateX(0); opacity: 1; }
+      to { transform: translateX(100%); opacity: 1; }
+    }
+
+    @keyframes photo-next-from-left {
+      from { transform: translateX(-100%); opacity: 1; }
+      to { transform: translateX(0); opacity: 1; }
     }
 
     .has-photo .property-mark {
@@ -1386,12 +1416,34 @@
       line-height: 1.45;
     }
 
-    .card-booking-hint {
-      margin-top: 12px;
+    .card-facts {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      margin: 0 0 14px;
+    }
+
+    .card-fact {
+      min-width: 0;
+    }
+
+    .card-fact strong {
+      display: block;
       color: var(--accent-light);
-      font-size: 10px;
+      font-family: "Bebas Neue", sans-serif;
+      font-size: 24px;
+      line-height: 1;
+      letter-spacing: 0.8px;
+    }
+
+    .card-fact span {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 9px;
       font-weight: 800;
-      letter-spacing: 1.1px;
+      letter-spacing: 0.8px;
+      line-height: 1.2;
       text-transform: uppercase;
     }
 
@@ -1797,15 +1849,27 @@
       padding: 9px 12px;
       border: 1px solid rgba(120, 168, 255, 0.28);
       border-radius: 6px;
-      background: rgba(0, 0, 0, 0.24);
-      color: var(--text);
+      background: #0d1424;
+      color: #f8fbff;
+      color-scheme: dark;
       font-size: 13px;
       font-weight: 700;
+    }
+
+    .booking-filter-select option {
+      background: #111827;
+      color: #f8fbff;
     }
 
     html.light-mode .booking-filter-select {
       background: #ffffff;
       border-color: #cbd5e1;
+      color: #1f2937;
+      color-scheme: light;
+    }
+
+    html.light-mode .booking-filter-select option {
+      background: #ffffff;
       color: #1f2937;
     }
 
@@ -2347,6 +2411,7 @@
     <div class="header-controls">
       <div class="refresh-section">
         <span class="current-date-time" id="currentDateTime">Today</span>
+        <span class="refresh-divider" aria-hidden="true">|</span>
         <span class="refresh-time" id="refreshTime">Updated just now</span>
         <button class="refresh-btn" type="button" id="refreshBtn" aria-label="Refresh data">
           <svg class="refresh-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -2383,7 +2448,8 @@
         <div class="carousel-wrapper">
           <article class="property-card-large">
             <div class="card-image-large" id="carouselVisual">
-              <img class="property-photo" id="carouselPhoto" alt="" />
+              <img class="property-photo property-photo-current" id="carouselPhoto" alt="" />
+              <img class="property-photo property-photo-next" id="carouselPhotoNext" alt="" aria-hidden="true" />
               <div class="property-mark" id="carouselMark">NC</div>
               <div class="image-controls hidden" id="propertyImageControls" aria-label="Property photos">
                 <button class="image-control-btn" type="button" id="prevImageBtn" aria-label="Previous building photo">‹</button>
@@ -2666,8 +2732,8 @@
             "https://supportnoob.github.io/Food-Truck-Vendor/property-images/presidio-3.jpg",
             "https://supportnoob.github.io/Food-Truck-Vendor/property-images/presidio-4.jpg"
           ],
-          description: "Presidio is a flagship office destination with dense daytime occupancy and strong recurring demand for varied vendors. This premier location provides excellent visibility and consistent foot traffic throughout the day.\n📍 Address: 120 Presidio Avenue, San Francisco, CA 94115\n🚚 Parking Instructions: Food trucks must park at the designated location at the front entrance to ensure maximum visibility and convenient customer access.",
-          address: "120 Presidio Avenue, San Francisco, CA 94115"
+          description: "🏢 Presidio\nPresidio is a busy office building with a steady flow of employees and visitors throughout the week, providing excellent exposure for food trucks looking to reach a professional lunch crowd.\n\n📍 Address: 1155 Kelly Johnson Blvd, Colorado Springs, CO 80920\n\n🚚 Parking Instructions: Food trucks must park at the star-marked location on the map to ensure smooth traffic flow and convenient access for employees.",
+          address: "1155 Kelly Johnson Blvd, Colorado Springs, CO 80920, USA"
         }
       ];
 
@@ -2693,6 +2759,8 @@
         currentCarouselIndex: 0,
         propertyImageIndexes: {},
         propertyImageTimer: null,
+        propertyImageSlideDirection: 1,
+        isPropertyImageSliding: false,
         preloadedImages: new Set(),
         currentMonth: new Date(MIN_MONTH),
         activeView: "carousel",
@@ -3273,10 +3341,12 @@
         const images = getPropertyImages(property);
         const visual = $("carouselVisual");
         const photo = $("carouselPhoto");
+        const nextPhoto = $("carouselPhotoNext");
         const controls = $("propertyImageControls");
         const progress = $("propertyImageProgress");
         const counter = $("propertyImageCounter");
         const imageIndex = getPropertyImageIndex(property);
+        const imageSrc = images[imageIndex];
 
         visual.classList.toggle("has-photo", Boolean(images.length));
         controls.classList.toggle("hidden", images.length <= 1);
@@ -3286,22 +3356,40 @@
         if (!images.length) {
           stopPropertyImageAutoplay();
           photo.removeAttribute("src");
+          nextPhoto.removeAttribute("src");
+          delete photo.dataset.src;
+          delete nextPhoto.dataset.src;
           counter.textContent = "0 / 0";
           return;
         }
 
-        setPhotoSource(photo, images[imageIndex], visual, true);
+        const shouldSlide =
+          photo.dataset.src &&
+          photo.dataset.src !== imageSrc &&
+          photo.dataset.propertyId === String(property.id) &&
+          visual.classList.contains("has-photo");
+
+        if (shouldSlide) {
+          slideCarouselPhoto(property, imageSrc, imageIndex);
+        } else {
+          setPhotoSource(photo, imageSrc, visual);
+          photo.dataset.propertyId = String(property.id);
+        }
+
         counter.textContent = `${imageIndex + 1} / ${images.length}`;
         preloadPropertyImages(property, imageIndex);
         schedulePropertyImageAutoplay(images.length > 1);
       }
 
       function changePropertyImage(direction) {
+        if (state.isPropertyImageSliding) return;
+
         const property = getCurrentProperty();
         const images = getPropertyImages(property);
         if (images.length <= 1) return;
 
         const currentIndex = getPropertyImageIndex(property);
+        state.propertyImageSlideDirection = direction < 0 ? -1 : 1;
         state.propertyImageIndexes[property.id] = (currentIndex + direction + images.length) % images.length;
         renderCarouselPhoto(property);
       }
@@ -3388,12 +3476,24 @@
           const body = createEl("div", "card-body");
           const name = createEl("h3", "card-name", property.name);
           const divider = createEl("div", "card-divider");
+          const facts = createEl("div", "card-facts");
+          facts.append(
+            cardFact(property.employees.toLocaleString("en-US"), "Tenants"),
+            cardFact(String(getSheetBookedTotal(property.id)), "Booked"),
+            cardFact(getVisitFrequencyValue(property), getVisitFrequencyLabel(property))
+          );
           const address = createEl("div", "card-address", property.address);
 
-          body.append(name, divider, address);
+          body.append(name, divider, facts, address);
           card.append(image, body);
           grid.appendChild(card);
         });
+      }
+
+      function cardFact(value, label) {
+        const item = createEl("div", "card-fact");
+        item.append(createEl("strong", "", value), createEl("span", "", label));
+        return item;
       }
 
       function statLine(strongText, suffix, isDanger = false) {
@@ -3438,7 +3538,6 @@
 
         photo.onload = () => {
           if (visual) visual.classList.add("has-photo");
-          if (animate && visual) animatePhotoWipe(visual);
         };
         photo.onerror = () => {
           photo.removeAttribute("src");
@@ -3449,6 +3548,48 @@
         photo.loading = "eager";
         photo.dataset.src = src;
         photo.src = src;
+      }
+
+      function slideCarouselPhoto(property, src, imageIndex) {
+        const visual = $("carouselVisual");
+        const currentPhoto = $("carouselPhoto");
+        const nextPhoto = $("carouselPhotoNext");
+        const directionClass = state.propertyImageSlideDirection < 0 ? "photo-slide-backward" : "photo-slide-forward";
+
+        state.isPropertyImageSliding = true;
+        nextPhoto.alt = `${property.name} building photo ${imageIndex + 1}`;
+        nextPhoto.decoding = "async";
+        nextPhoto.loading = "eager";
+
+        nextPhoto.onload = () => {
+          visual.classList.remove("photo-slide-forward", "photo-slide-backward");
+          visual.classList.add("has-photo", directionClass);
+
+          window.setTimeout(() => {
+            currentPhoto.src = src;
+            currentPhoto.dataset.src = src;
+            currentPhoto.dataset.propertyId = String(property.id);
+            currentPhoto.alt = nextPhoto.alt;
+            currentPhoto.onload = null;
+            currentPhoto.onerror = null;
+            nextPhoto.removeAttribute("src");
+            nextPhoto.removeAttribute("data-src");
+            nextPhoto.alt = "";
+            nextPhoto.onload = null;
+            nextPhoto.onerror = null;
+            visual.classList.remove(directionClass);
+            state.isPropertyImageSliding = false;
+          }, 480);
+        };
+
+        nextPhoto.onerror = () => {
+          nextPhoto.removeAttribute("src");
+          nextPhoto.removeAttribute("data-src");
+          state.isPropertyImageSliding = false;
+        };
+
+        nextPhoto.dataset.src = src;
+        nextPhoto.src = src;
       }
 
       function schedulePropertyImageAutoplay(shouldRun) {
@@ -3476,13 +3617,6 @@
         progress.classList.remove("is-running");
         void progress.offsetWidth;
         progress.classList.add("is-running");
-      }
-
-      function animatePhotoWipe(visual) {
-        visual.classList.remove("photo-wipe");
-        void visual.offsetWidth;
-        visual.classList.add("photo-wipe");
-        window.setTimeout(() => visual.classList.remove("photo-wipe"), 520);
       }
 
       function preloadPropertyImages(property = null, currentIndex = 0) {
