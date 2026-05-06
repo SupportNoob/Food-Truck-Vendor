@@ -889,6 +889,24 @@
         var(--property-gradient, linear-gradient(135deg, #14233f, #152238));
     }
 
+    .property-photo {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 0.22s ease;
+    }
+
+    .has-photo .property-photo {
+      opacity: 1;
+    }
+
+    .has-photo .property-mark {
+      display: none;
+    }
+
     .card-image-large::before,
     .card-image::before,
     .detail-image::before {
@@ -898,6 +916,67 @@
       background:
         linear-gradient(115deg, transparent 0 42%, rgba(255, 255, 255, 0.08) 42% 43%, transparent 43% 100%),
         radial-gradient(circle at 78% 20%, rgba(255, 255, 255, 0.18), transparent 22rem);
+    }
+
+    .card-image-large.has-photo::before,
+    .card-image.has-photo::before,
+    .detail-image.has-photo::before {
+      background: linear-gradient(180deg, rgba(5, 6, 9, 0.04), rgba(5, 6, 9, 0.28));
+      z-index: 1;
+    }
+
+    .image-controls {
+      position: absolute;
+      right: 18px;
+      bottom: 18px;
+      z-index: 3;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 999px;
+      background: rgba(5, 6, 9, 0.62);
+      color: #ffffff;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.24);
+      backdrop-filter: blur(10px);
+    }
+
+    .image-controls.hidden {
+      display: none;
+    }
+
+    .image-control-btn {
+      display: grid;
+      width: 32px;
+      height: 32px;
+      place-items: center;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.08);
+      color: #ffffff;
+      cursor: pointer;
+      font-size: 19px;
+      line-height: 1;
+      transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+    }
+
+    .image-control-btn:hover,
+    .image-control-btn:focus-visible {
+      border-color: rgba(255, 255, 255, 0.8);
+      background: rgba(255, 255, 255, 0.18);
+      outline: none;
+      transform: translateY(-1px);
+    }
+
+    .image-counter {
+      min-width: 44px;
+      color: #ffffff;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.8px;
+      text-align: center;
+      text-transform: uppercase;
     }
 
     .property-mark {
@@ -2128,14 +2207,20 @@
         <div class="carousel-wrapper">
           <article class="property-card-large">
             <div class="card-image-large" id="carouselVisual">
+              <img class="property-photo" id="carouselPhoto" alt="" />
               <div class="property-mark" id="carouselMark">NC</div>
+              <div class="image-controls hidden" id="propertyImageControls" aria-label="Property photos">
+                <button class="image-control-btn" type="button" id="prevImageBtn" aria-label="Previous building photo">‹</button>
+                <span class="image-counter" id="propertyImageCounter">1 / 1</span>
+                <button class="image-control-btn" type="button" id="nextImageBtn" aria-label="Next building photo">›</button>
+              </div>
             </div>
             <div class="card-content-large">
               <h3 class="card-name-large" id="carouselName">Loading</h3>
               <div class="card-meta-large" aria-label="Property summary">
                 <div class="meta-item">
                   <div class="meta-value" id="carouselEmployees">-</div>
-                  <div class="meta-label">Employees</div>
+                  <div class="meta-label">Tenants</div>
                 </div>
                 <div class="meta-item">
                   <div class="meta-value" id="carouselFreq">-</div>
@@ -2178,13 +2263,14 @@
 
         <article class="detail-card">
           <div class="detail-image" id="detailVisual">
+            <img class="property-photo" id="detailPhoto" alt="" />
             <div class="property-mark" id="detailMark">NC</div>
           </div>
           <h3 class="detail-name" id="detailName">Property Name</h3>
           <div class="detail-meta">
             <div class="detail-meta-item">
               <div class="detail-meta-value" id="detailEmployees">-</div>
-              <div class="detail-meta-label">Employees</div>
+              <div class="detail-meta-label">Tenants</div>
             </div>
             <div class="detail-meta-item">
               <div class="detail-meta-value" id="detailFreq">-</div>
@@ -2309,10 +2395,16 @@
           name: "Northcreek",
           mark: "NC",
           aliases: ["Northcreek"],
-          employees: 250,
+          employees: 500,
           frequency: 2,
           totalSlots: 8,
           gradient: "linear-gradient(135deg, #1c4f8f, #12314f)",
+          images: [
+            "property-images/northcreek-1.jpg",
+            "property-images/northcreek-2.jpg",
+            "property-images/northcreek-3.jpg",
+            "property-images/northcreek-4.jpg"
+          ],
           description: "🌟 Northcreek Northcreek is our most popular property and a favorite stop for food trucks and guests alike! With high visibility and a steady flow of tenants and visitors, this location always draws a great crowd.\n📍 Address: 5725 Mark Dabling Blvd, Colorado Springs, CO 80919 (Located just off I-25)\n🚚 Parking Instructions: Food trucks must park at the star-marked location on the map to ensure smooth traffic flow and easy access for customers.",
           address: "5725 Mark Dabling Blvd, Colorado Springs, CO 80919"
         },
@@ -2321,10 +2413,16 @@
           name: "Space Center",
           mark: "SC",
           aliases: ["Space Center", "985 Space Center"],
-          employees: 180,
+          employees: "50-80",
           frequency: 2,
           totalSlots: 8,
           gradient: "linear-gradient(135deg, #31576e, #183242)",
+          images: [
+            "property-images/space-center-1.jpg",
+            "property-images/space-center-2.jpg",
+            "property-images/space-center-3.jpg",
+            "property-images/space-center-4.jpg"
+          ],
           description: "Space Center is one of our signature properties, offering a central location and a strong community presence. While not as large as Northcreek, it consistently attracts steady foot traffic and provides vendors with great visibility.\n📍 Address: 985 Space Center Dr, Colorado Springs, CO 80915\n🚚 Parking Instructions: Food trucks must park at the star-marked location on the map for easy access and to maintain smooth traffic flow.",
           address: "985 Space Center Dr, Colorado Springs, CO 80915"
         },
@@ -2333,10 +2431,16 @@
           name: "Newport",
           mark: "NP",
           aliases: ["Newport", "1055 Newport"],
-          employees: 320,
+          employees: "50-80",
           frequency: 3,
           totalSlots: 12,
           gradient: "linear-gradient(135deg, #5b4f8f, #24244d)",
+          images: [
+            "property-images/newport-1.jpg",
+            "property-images/newport-2.jpg",
+            "property-images/newport-3.jpg",
+            "property-images/newport-4.jpg"
+          ],
           description: "🏢 Newport is a professional office building with a consistent flow of employees and visitors during the workweek. This location offers food trucks excellent exposure to a busy office community, with heavy foot traffic on Tuesdays and Wednesdays, making it an ideal stop for lunch crowds.\n📍 Address: 1055 Newport Rd, Colorado Springs, CO 80916\n🚚 Parking Instructions: Food trucks must park at the star-marked location on the map to ensure smooth traffic flow and convenient access for employees.",
           address: "1055 Newport Rd, Colorado Springs, CO 80916"
         },
@@ -2349,6 +2453,12 @@
           frequency: 1,
           totalSlots: 4,
           gradient: "linear-gradient(135deg, #2f745d, #173f38)",
+          images: [
+            "property-images/garden-gateway-1.jpg",
+            "property-images/garden-gateway-2.jpg",
+            "property-images/garden-gateway-3.jpg",
+            "property-images/garden-gateway-4.jpg"
+          ],
           description: "🏢 Garden Gateway is a dynamic office complex consisting of three buildings: 1365, 1355, and 1375 Garden of the Gods Rd, Colorado Springs, CO 80907, USA. This property sees a steady flow of employees throughout the week, making it an ideal location for food trucks to reach a busy lunch crowd.\n📍 Address (all buildings): 1365 Garden of the Gods Rd, Colorado Springs, CO 80907\n🚚 Parking Instructions: Food trucks must park at the star-marked location at 1365 Garden of the Gods Rd, which serves as the designated access point for the complex.",
           address: "1365 Garden of the Gods Rd, Colorado Springs, CO 80907"
         },
@@ -2357,10 +2467,16 @@
           name: "Presidio",
           mark: "PR",
           aliases: ["Presidio"],
-          employees: 420,
+          employees: 150,
           frequency: 3,
           totalSlots: 12,
           gradient: "linear-gradient(135deg, #7b5948, #362922)",
+          images: [
+            "property-images/presidio-1.jpg",
+            "property-images/presidio-2.jpg",
+            "property-images/presidio-3.jpg",
+            "property-images/presidio-4.jpg"
+          ],
           description: "Presidio is a flagship office destination with dense daytime occupancy and strong recurring demand for varied vendors. This premier location provides excellent visibility and consistent foot traffic throughout the day.\n📍 Address: 120 Presidio Avenue, San Francisco, CA 94115\n🚚 Parking Instructions: Food trucks must park at the designated location at the front entrance to ensure maximum visibility and convenient customer access.",
           address: "120 Presidio Avenue, San Francisco, CA 94115"
         }
@@ -2386,6 +2502,7 @@
         currentUser: null,
         selectedTruckId: null,
         currentCarouselIndex: 0,
+        propertyImageIndexes: {},
         currentMonth: new Date(MIN_MONTH),
         activeView: "carousel",
         currentPropertyId: null,
@@ -2728,6 +2845,8 @@
         $("detailsCloseBtn").addEventListener("click", closeDetails);
         $("themeToggle").addEventListener("click", toggleTheme);
         $("refreshBtn").addEventListener("click", refreshData);
+        $("prevImageBtn").addEventListener("click", () => changePropertyImage(-1));
+        $("nextImageBtn").addEventListener("click", () => changePropertyImage(1));
         $("confirmCancelBtn").addEventListener("click", cancelConfirmation);
         $("confirmProceedBtn").addEventListener("click", proceedConfirmation);
 
@@ -2941,8 +3060,41 @@
         $("carouselMonth").textContent = formatMonth(state.currentMonth);
         $("carouselMark").textContent = property.mark;
         $("carouselVisual").style.setProperty("--property-gradient", property.gradient);
+        renderCarouselPhoto(property);
 
         renderIndicators();
+      }
+
+      function renderCarouselPhoto(property) {
+        const images = getPropertyImages(property);
+        const visual = $("carouselVisual");
+        const photo = $("carouselPhoto");
+        const controls = $("propertyImageControls");
+        const counter = $("propertyImageCounter");
+        const imageIndex = getPropertyImageIndex(property);
+
+        visual.classList.toggle("has-photo", Boolean(images.length));
+        controls.classList.toggle("hidden", images.length <= 1);
+        photo.alt = images.length ? `${property.name} building photo ${imageIndex + 1}` : "";
+
+        if (!images.length) {
+          photo.removeAttribute("src");
+          counter.textContent = "0 / 0";
+          return;
+        }
+
+        setPhotoSource(photo, images[imageIndex], visual);
+        counter.textContent = `${imageIndex + 1} / ${images.length}`;
+      }
+
+      function changePropertyImage(direction) {
+        const property = getCurrentProperty();
+        const images = getPropertyImages(property);
+        if (images.length <= 1) return;
+
+        const currentIndex = getPropertyImageIndex(property);
+        state.propertyImageIndexes[property.id] = (currentIndex + direction + images.length) % images.length;
+        renderCarouselPhoto(property);
       }
 
       function renderIndicators() {
@@ -3002,13 +3154,18 @@
 
           const image = createEl("div", "card-image");
           image.style.setProperty("--property-gradient", property.gradient);
+          const photo = createPropertyPhoto(property, 0, `${property.name} building photo`, image);
+          if (photo) {
+            image.classList.add("has-photo");
+            image.appendChild(photo);
+          }
           const mark = createEl("div", "property-mark", property.mark);
           image.appendChild(mark);
 
           const body = createEl("div", "card-body");
           const name = createEl("h3", "card-name", property.name);
           const stats = createEl("div", "card-stats");
-          stats.appendChild(statLine(property.employees.toLocaleString("en-US"), " employees"));
+          stats.appendChild(statLine(property.employees.toLocaleString("en-US"), " tenants"));
           stats.appendChild(statLine(`${property.frequency}x`, " per week"));
           stats.appendChild(statLine(remaining === 0 ? "Fully booked" : String(remaining), remaining === 0 ? "" : " slots left", remaining === 0));
           stats.appendChild(statLine(String(booked), " booked this month"));
@@ -3033,6 +3190,55 @@
         return line;
       }
 
+      function renderDetailPhoto(property) {
+        const detailVisual = $("detailVisual");
+        const detailPhoto = $("detailPhoto");
+        const images = getPropertyImages(property);
+
+        detailVisual.classList.toggle("has-photo", Boolean(images.length));
+        detailPhoto.alt = images.length ? `${property.name} building photo` : "";
+
+        if (!images.length) {
+          detailPhoto.removeAttribute("src");
+          return;
+        }
+
+        setPhotoSource(detailPhoto, images[0], detailVisual);
+      }
+
+      function createPropertyPhoto(property, index, altText, visual = null) {
+        const images = getPropertyImages(property);
+        if (!images.length) return null;
+
+        const photo = createEl("img", "property-photo");
+        photo.alt = altText;
+        setPhotoSource(photo, images[Math.min(index, images.length - 1)], visual);
+        return photo;
+      }
+
+      function setPhotoSource(photo, src, visual = null) {
+        photo.onload = () => {
+          if (visual) visual.classList.add("has-photo");
+        };
+        photo.onerror = () => {
+          photo.removeAttribute("src");
+          if (visual) visual.classList.remove("has-photo");
+        };
+        photo.src = src;
+      }
+
+      function getPropertyImages(property) {
+        return Array.isArray(property?.images) ? property.images.filter(Boolean) : [];
+      }
+
+      function getPropertyImageIndex(property) {
+        const images = getPropertyImages(property);
+        if (!images.length) return 0;
+
+        const savedIndex = state.propertyImageIndexes[property.id] || 0;
+        return Math.min(savedIndex, images.length - 1);
+      }
+
       function viewBookingDetail() {
         const property = getCurrentProperty();
         state.currentPropertyId = property.id;
@@ -3046,6 +3252,7 @@
         $("detailSlots").textContent = getSlotsRemaining(property.id, state.currentMonth);
         $("detailMark").textContent = property.mark;
         $("detailVisual").style.setProperty("--property-gradient", property.gradient);
+        renderDetailPhoto(property);
 
         $("carouselView").classList.add("hidden");
         $("gridView").classList.add("hidden");
