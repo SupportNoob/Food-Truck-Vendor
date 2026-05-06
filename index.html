@@ -3049,7 +3049,7 @@
 
       function renderCarousel() {
         const property = getCurrentProperty();
-        const booked = getBookedCount(property.id, state.currentMonth);
+        const booked = getSheetBookedTotal(property.id);
         const remaining = getSlotsRemaining(property.id, state.currentMonth);
 
         $("carouselName").textContent = property.name;
@@ -3149,7 +3149,7 @@
 
         PROPERTIES.forEach((property) => {
           const remaining = getSlotsRemaining(property.id, state.currentMonth);
-          const booked = getBookedCount(property.id, state.currentMonth);
+          const booked = getSheetBookedTotal(property.id);
           const card = createEl("article", "property-card");
 
           const image = createEl("div", "card-image");
@@ -3168,7 +3168,7 @@
           stats.appendChild(statLine(property.employees.toLocaleString("en-US"), " tenants"));
           stats.appendChild(statLine(`${property.frequency}x`, " per week"));
           stats.appendChild(statLine(remaining === 0 ? "Fully booked" : String(remaining), remaining === 0 ? "" : " slots left", remaining === 0));
-          stats.appendChild(statLine(String(booked), " booked this month"));
+          stats.appendChild(statLine(String(booked), " booked"));
 
           const action = createEl("div", "card-action");
           const button = createEl("button", "btn btn-secondary", "Book Now");
@@ -3809,6 +3809,10 @@
           .filter((booking) => booking.propId === propertyId)
           .map((booking) => booking.date);
         return [...new Set([...sheetDates, ...localDates])];
+      }
+
+      function getSheetBookedTotal(propertyId) {
+        return state.sheetBookings.filter((booking) => booking.propId === propertyId).length;
       }
 
       function getMonthlyCapacity(property, monthDate) {
