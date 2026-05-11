@@ -281,7 +281,7 @@
       background: transparent;
       color: var(--accent-light);
       cursor: pointer;
-      font-size: 18px;
+      font-size: 22px;
       transition: border-color 0.18s ease, background 0.18s ease;
     }
 
@@ -290,6 +290,45 @@
       border-color: var(--accent-light);
       background: rgba(47, 111, 209, 0.1);
       outline: none;
+    }
+
+    .theme-toggle svg {
+      width: 1em;
+      height: 1em;
+      overflow: visible;
+      transition: transform 0.4s ease;
+    }
+
+    .theme-spin-mask {
+      transform-origin: center;
+      transition: transform 0.4s ease;
+    }
+
+    .theme-spin-core {
+      transform-origin: center;
+      transition: transform 0.4s ease;
+    }
+
+    .theme-spin-ray {
+      transform-origin: center;
+      transition: transform 0.4s ease, opacity 0.24s ease;
+    }
+
+    html:not(.light-mode) .theme-spin-mask {
+      transform: translate(-3.25px, 0.5px);
+    }
+
+    html:not(.light-mode) .theme-toggle svg {
+      transform: rotate(180deg);
+    }
+
+    html:not(.light-mode) .theme-spin-core {
+      transform: scale(1.7);
+    }
+
+    html:not(.light-mode) .theme-spin-ray {
+      opacity: 0;
+      transform: rotate(45deg) scale(0);
     }
 
     .header-vendor {
@@ -900,6 +939,38 @@
       overflow: hidden;
     }
 
+    .property-card-large.property-switch-forward {
+      animation: property-switch-forward 0.38s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .property-card-large.property-switch-backward {
+      animation: property-switch-backward 0.38s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    @keyframes property-switch-forward {
+      from {
+        opacity: 0.72;
+        transform: translateX(24px) scale(0.985);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+      }
+    }
+
+    @keyframes property-switch-backward {
+      from {
+        opacity: 0.72;
+        transform: translateX(-24px) scale(0.985);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+      }
+    }
+
     .card-image-large {
       position: relative;
       display: grid;
@@ -1418,20 +1489,22 @@
 
     .card-facts {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 8px;
       margin: 0 0 14px;
+      text-align: center;
     }
 
     .card-fact {
       min-width: 0;
+      text-align: center;
     }
 
     .card-fact strong {
       display: block;
       color: var(--accent-light);
       font-family: "Bebas Neue", sans-serif;
-      font-size: 24px;
+      font-size: 22px;
       line-height: 1;
       letter-spacing: 0.8px;
     }
@@ -1440,10 +1513,11 @@
       display: block;
       margin-top: 4px;
       color: var(--muted);
-      font-size: 9px;
+      font-size: 8.5px;
       font-weight: 800;
       letter-spacing: 0.8px;
       line-height: 1.2;
+      overflow-wrap: anywhere;
       text-transform: uppercase;
     }
 
@@ -1905,6 +1979,32 @@
       background: rgba(5, 150, 105, 0.08);
     }
 
+    .booked-item-completed {
+      border-color: rgba(148, 163, 184, 0.32);
+      background: rgba(148, 163, 184, 0.12);
+    }
+
+    .booked-item-completed .booked-item-name {
+      color: #cbd5e1;
+    }
+
+    .booked-item-completed .booked-item-time {
+      color: #b7cdf8;
+    }
+
+    html.light-mode .booked-item-completed {
+      border-color: #cbd5e1;
+      background: #f1f5f9;
+    }
+
+    html.light-mode .booked-item-completed .booked-item-name {
+      color: #475569;
+    }
+
+    html.light-mode .booked-item-completed .booked-item-time {
+      color: #1957ad;
+    }
+
     .booked-item-name {
       margin-bottom: 5px;
       color: var(--success);
@@ -2064,6 +2164,11 @@
     html.light-mode .booked-item {
       background: #ecfdf5;
       border-color: #a7f3d0;
+    }
+
+    html.light-mode .booked-item-completed {
+      background: #f1f5f9;
+      border-color: #cbd5e1;
     }
 
     html.light-mode .selected-date-item {
@@ -2401,7 +2506,7 @@
   <header class="app-header hidden" id="appHeader">
     <a class="logo" href="#" aria-label="Alturas Capital Partners Food Truck Vendor Booking Portal">
       <span class="logo-badge" aria-hidden="true">
-        <img class="logo-image" src="https://supportnoob.github.io/Food-Truck-Vendor/acp.png" alt="" />
+        <img class="logo-image" src="acp.png" alt="" />
       </span>
       <span class="logo-copy">
         <span class="logo-main">ALTURAS CAPITAL PARTNERS</span>
@@ -2420,8 +2525,25 @@
           Refresh
         </button>
       </div>
-      <button class="theme-toggle" type="button" id="themeToggle" aria-label="Toggle dark/light mode">
-        🌙
+      <button class="theme-toggle" type="button" id="themeToggle" aria-label="Toggle dark/light mode" title="Toggle theme">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <defs>
+            <clipPath id="themeSpinClip">
+              <path class="theme-spin-mask" d="M0 0h25a1 1 0 0 0 10 10v14H0Z"></path>
+            </clipPath>
+          </defs>
+          <g stroke="currentColor" stroke-linecap="round">
+            <circle class="theme-spin-core" cx="12" cy="12" r="5" fill="currentColor" clip-path="url(#themeSpinClip)"></circle>
+            <path class="theme-spin-ray" d="M12 1.4v2.4" fill="none" stroke-width="2" stroke-linejoin="round" stroke-miterlimit="0"></path>
+            <path class="theme-spin-ray" d="m20.3 3.7-2.5 2.5" fill="none" stroke-width="2" stroke-linejoin="round" stroke-miterlimit="0"></path>
+            <path class="theme-spin-ray" d="M22.6 12h-2.4" fill="none" stroke-width="2" stroke-linejoin="round" stroke-miterlimit="0"></path>
+            <path class="theme-spin-ray" d="M12 22.6v-2.4" fill="none" stroke-width="2" stroke-linejoin="round" stroke-miterlimit="0"></path>
+            <path class="theme-spin-ray" d="M1.4 12h2.4" fill="none" stroke-width="2" stroke-linejoin="round" stroke-miterlimit="0"></path>
+            <path class="theme-spin-ray" d="m20.3 20.3-2.5-2.5" fill="none" stroke-width="2" stroke-linejoin="round" stroke-miterlimit="0"></path>
+            <path class="theme-spin-ray" d="m3.7 20.3 2.5-2.5" fill="none" stroke-width="2" stroke-linejoin="round" stroke-miterlimit="0"></path>
+            <path class="theme-spin-ray" d="m3.7 3.7 2.5 2.5" fill="none" stroke-width="2" stroke-linejoin="round" stroke-miterlimit="0"></path>
+          </g>
+        </svg>
       </button>
     </div>
     <div class="header-vendor">
@@ -2655,10 +2777,10 @@
           totalSlots: 8,
           gradient: "linear-gradient(135deg, #1c4f8f, #12314f)",
           images: [
-            "https://supportnoob.github.io/Food-Truck-Vendor/property-images/northcreek-1.jpg",
-            "https://supportnoob.github.io/Food-Truck-Vendor/property-images/northcreek-2.jpg",
-            "https://supportnoob.github.io/Food-Truck-Vendor/property-images/northcreek-3.jpg",
-            "https://supportnoob.github.io/Food-Truck-Vendor/property-images/northcreek-4.jpg"
+            "property-images/northcreek-1.jpg",
+            "property-images/northcreek-2.jpg",
+            "property-images/northcreek-3.jpg",
+            "property-images/northcreek-4.jpg"
           ],
           description: "🌟 Northcreek Northcreek is our most popular property and a favorite stop for food trucks and guests alike! With high visibility and a steady flow of tenants and visitors, this location always draws a great crowd.\n📍 Address: 5725 Mark Dabling Blvd, Colorado Springs, CO 80919 (Located just off I-25)\n🚚 Parking Instructions: Food trucks must park at the star-marked location on the map to ensure smooth traffic flow and easy access for customers.",
           address: "5725 Mark Dabling Blvd, Colorado Springs, CO 80919"
@@ -2673,10 +2795,10 @@
           totalSlots: 8,
           gradient: "linear-gradient(135deg, #31576e, #183242)",
           images: [
-            "https://supportnoob.github.io/Food-Truck-Vendor/property-images/space-center-1.jpg",
-            "https://supportnoob.github.io/Food-Truck-Vendor/property-images/space-center-2.jpg",
-            "https://supportnoob.github.io/Food-Truck-Vendor/property-images/space-center-3.jpg",
-            "https://supportnoob.github.io/Food-Truck-Vendor/property-images/space-center-4.jpg"
+            "property-images/space-center-1.jpg",
+            "property-images/space-center-2.jpg",
+            "property-images/space-center-3.jpg",
+            "property-images/space-center-4.jpg"
           ],
           description: "Space Center is one of our signature properties, offering a central location and a strong community presence. While not as large as Northcreek, it consistently attracts steady foot traffic and provides vendors with great visibility.\n📍 Address: 985 Space Center Dr, Colorado Springs, CO 80915\n🚚 Parking Instructions: Food trucks must park at the star-marked location on the map for easy access and to maintain smooth traffic flow.",
           address: "985 Space Center Dr, Colorado Springs, CO 80915"
@@ -2691,10 +2813,10 @@
           totalSlots: 12,
           gradient: "linear-gradient(135deg, #5b4f8f, #24244d)",
           images: [
-            "https://supportnoob.github.io/Food-Truck-Vendor/property-images/newport-1.jpg",
-            "https://supportnoob.github.io/Food-Truck-Vendor/property-images/newport-2.jpg",
-            "https://supportnoob.github.io/Food-Truck-Vendor/property-images/newport-3.jpg",
-            "https://supportnoob.github.io/Food-Truck-Vendor/property-images/newport-4.jpg"
+            "property-images/newport-1.jpg",
+            "property-images/newport-2.jpg",
+            "property-images/newport-3.jpg",
+            "property-images/newport-4.jpg"
           ],
           description: "🏢 Newport is a professional office building with a consistent flow of employees and visitors during the workweek. This location offers food trucks excellent exposure to a busy office community, with heavy foot traffic on Tuesdays and Wednesdays, making it an ideal stop for lunch crowds.\n📍 Address: 1055 Newport Rd, Colorado Springs, CO 80916\n🚚 Parking Instructions: Food trucks must park at the star-marked location on the map to ensure smooth traffic flow and convenient access for employees.",
           address: "1055 Newport Rd, Colorado Springs, CO 80916"
@@ -2709,10 +2831,10 @@
           totalSlots: 4,
           gradient: "linear-gradient(135deg, #2f745d, #173f38)",
           images: [
-            "https://supportnoob.github.io/Food-Truck-Vendor/property-images/garden-gateway-1.jpg",
-            "https://supportnoob.github.io/Food-Truck-Vendor/property-images/garden-gateway-2.jpg",
-            "https://supportnoob.github.io/Food-Truck-Vendor/property-images/garden-gateway-3.jpg",
-            "https://supportnoob.github.io/Food-Truck-Vendor/property-images/garden-gateway-4.jpg"
+            "property-images/garden-gateway-1.jpg",
+            "property-images/garden-gateway-2.jpg",
+            "property-images/garden-gateway-3.jpg",
+            "property-images/garden-gateway-4.jpg"
           ],
           description: "🏢 Garden Gateway is a dynamic office complex consisting of three buildings: 1365, 1355, and 1375 Garden of the Gods Rd, Colorado Springs, CO 80907, USA. This property sees a steady flow of employees throughout the week, making it an ideal location for food trucks to reach a busy lunch crowd.\n📍 Address (all buildings): 1365 Garden of the Gods Rd, Colorado Springs, CO 80907\n🚚 Parking Instructions: Food trucks must park at the star-marked location at 1365 Garden of the Gods Rd, which serves as the designated access point for the complex.",
           address: "1365 Garden of the Gods Rd, Colorado Springs, CO 80907"
@@ -2727,10 +2849,10 @@
           totalSlots: 12,
           gradient: "linear-gradient(135deg, #7b5948, #362922)",
           images: [
-            "https://supportnoob.github.io/Food-Truck-Vendor/property-images/presidio-1.jpg",
-            "https://supportnoob.github.io/Food-Truck-Vendor/property-images/presidio-2.jpg",
-            "https://supportnoob.github.io/Food-Truck-Vendor/property-images/presidio-3.jpg",
-            "https://supportnoob.github.io/Food-Truck-Vendor/property-images/presidio-4.jpg"
+            "property-images/presidio-1.jpg",
+            "property-images/presidio-2.jpg",
+            "property-images/presidio-3.jpg",
+            "property-images/presidio-4.jpg"
           ],
           description: "🏢 Presidio\nPresidio is a busy office building with a steady flow of employees and visitors throughout the week, providing excellent exposure for food trucks looking to reach a professional lunch crowd.\n\n📍 Address: 1155 Kelly Johnson Blvd, Colorado Springs, CO 80920\n\n🚚 Parking Instructions: Food trucks must park at the star-marked location on the map to ensure smooth traffic flow and convenient access for employees.",
           address: "1155 Kelly Johnson Blvd, Colorado Springs, CO 80920, USA"
@@ -2798,17 +2920,22 @@
 
         if (shouldUseLightMode) {
           document.documentElement.classList.add("light-mode");
-          $("themeToggle").textContent = "☀️";
         } else {
           document.documentElement.classList.remove("light-mode");
-          $("themeToggle").textContent = "🌙";
         }
+        syncThemeToggle(shouldUseLightMode);
       }
 
       function toggleTheme() {
         const isLightMode = document.documentElement.classList.toggle("light-mode");
         window.localStorage.setItem(THEME_STORAGE_KEY, isLightMode ? "light" : "dark");
-        $("themeToggle").textContent = isLightMode ? "☀️" : "🌙";
+        syncThemeToggle(isLightMode);
+      }
+
+      function syncThemeToggle(isLightMode) {
+        const button = $("themeToggle");
+        button.setAttribute("aria-pressed", String(isLightMode));
+        button.title = isLightMode ? "Switch to dark mode" : "Switch to light mode";
       }
 
       function updateRefreshTime() {
@@ -3317,7 +3444,7 @@
         });
       }
 
-      function renderCarousel() {
+      function renderCarousel(direction = 0) {
         const property = getCurrentProperty();
         const booked = getSheetBookedTotal(property.id);
         const remaining = getSlotsRemaining(property.id, state.currentMonth);
@@ -3335,6 +3462,22 @@
         renderCarouselPhoto(property);
 
         renderIndicators();
+        animatePropertySwitch(direction);
+      }
+
+      function animatePropertySwitch(direction) {
+        if (!direction) return;
+
+        const card = document.querySelector(".property-card-large");
+        if (!card) return;
+
+        const className = direction < 0 ? "property-switch-backward" : "property-switch-forward";
+        card.classList.remove("property-switch-forward", "property-switch-backward");
+        void card.offsetWidth;
+        card.classList.add(className);
+        window.setTimeout(() => {
+          card.classList.remove(className);
+        }, 420);
       }
 
       function renderCarouselPhoto(property) {
@@ -3409,17 +3552,19 @@
 
       function nextProperty() {
         state.currentCarouselIndex = (state.currentCarouselIndex + 1) % PROPERTIES.length;
-        renderCarousel();
+        renderCarousel(1);
       }
 
       function prevProperty() {
         state.currentCarouselIndex = (state.currentCarouselIndex - 1 + PROPERTIES.length) % PROPERTIES.length;
-        renderCarousel();
+        renderCarousel(-1);
       }
 
       function goToProperty(index) {
+        if (index === state.currentCarouselIndex) return;
+        const direction = index > state.currentCarouselIndex ? 1 : -1;
         state.currentCarouselIndex = index;
-        renderCarousel();
+        renderCarousel(direction);
       }
 
       function switchView(view) {
@@ -3450,6 +3595,7 @@
         grid.replaceChildren();
 
         PROPERTIES.forEach((property) => {
+          const remaining = getSlotsRemaining(property.id, state.currentMonth);
           const card = createEl("article", "property-card");
           card.tabIndex = 0;
           card.setAttribute("role", "button");
@@ -3480,7 +3626,8 @@
           facts.append(
             cardFact(property.employees.toLocaleString("en-US"), "Tenants"),
             cardFact(String(getSheetBookedTotal(property.id)), "Booked"),
-            cardFact(getVisitFrequencyValue(property), getVisitFrequencyLabel(property))
+            cardFact(getVisitFrequencyValue(property), getVisitFrequencyLabel(property)),
+            cardFact(String(remaining), "Slots Left")
           );
           const address = createEl("div", "card-address", property.address);
 
@@ -4002,7 +4149,8 @@
         bookings.forEach((booking) => {
           const isEditing = booking.id === state.editingBookingId;
           const times = isEditing && state.editingDraft ? state.editingDraft : booking;
-          const item = createEl("article", "booked-item");
+          const status = getBookingDisplayStatus(booking);
+          const item = createEl("article", `booked-item booked-item-${status}`);
           item.appendChild(createEl("div", "booked-item-name", booking.propName));
           item.appendChild(createEl("div", "booked-item-date", formatFullDate(booking.date)));
 
